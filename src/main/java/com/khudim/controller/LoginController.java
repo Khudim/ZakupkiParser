@@ -26,7 +26,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPage(HttpServletRequest request) {
         request.getSession().setAttribute("personCode", request.getParameter("username"));
-        return "redirect:/";
+        return "redirect:/index/0";
     }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {

@@ -5,7 +5,10 @@ package com.khudim.helpers;
  */
 public enum Tag {
     PRICE("ns2:price"),
-    URL("ns2:urlOOS");
+    CUSTOMER("ns2:customer"),
+    URL("ns2:urlOOS"),
+    GUID("ns2:guid"),
+    PUBLICATION_DATE("ns2:publicationDate");
 
     private final String tag;
 

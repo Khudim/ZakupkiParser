@@ -1,9 +1,8 @@
 package com.khudim.config;
 
 
-import com.khudim.person.PersonRole;
-import com.khudim.person.PersonService;
-import org.hibernate.annotations.SourceType;
+import com.khudim.dao.person.PersonRole;
+import com.khudim.dao.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,11 +26,11 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/").hasAnyRole(PersonRole.ADMIN.role(),PersonRole.USER.role())
+                .authorizeRequests().antMatchers("/").hasRole(PersonRole.ADMIN.role())
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login").permitAll().defaultSuccessUrl("/login")
+                .loginPage("/login").permitAll().defaultSuccessUrl("/index/",true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -39,13 +38,12 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles(PersonRole.USER.role());
-       // auth.userDetailsService(personService);
+       auth.userDetailsService(personService).passwordEncoder(passwordEncoder());
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+
 }

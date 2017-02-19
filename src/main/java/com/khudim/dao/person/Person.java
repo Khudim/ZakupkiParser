@@ -1,38 +1,24 @@
-package com.khudim.person;
-
-import com.khudim.filter.Requirement;
+package com.khudim.dao.person;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
 @Table(name = "person")
-@NamedQueries({
-        @NamedQuery(name = "Person.findById",
-                query = "SELECT person FROM Person person WHERE person.code = :code "),
-        @NamedQuery(name = "Person.findAll",
-                query = "SELECT person FROM Person person")
-})
 public class Person {
 
-    @Id
-    @Column(name = "code")
     private String code;
-    @Column(name = "password", nullable = false)
+
     private String password;
-    @Column(name = "email", nullable = false)
+
     private String email;
-    @Transient
-    @Column(name = "role", nullable = false)
+
     private PersonRole role;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Requirement> requirements = new ArrayList<>();
 
     public Person() {
     }
-
+    @Id
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -41,6 +27,7 @@ public class Person {
         this.code = code;
     }
 
+    @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
     }
@@ -49,6 +36,7 @@ public class Person {
         this.password = password;
     }
 
+    @Column(name = "email", nullable = false)
     public String getEmail() {
         return email;
     }
@@ -57,10 +45,12 @@ public class Person {
         this.email = email;
     }
 
+    @Column(name = "role", nullable = false)
     public String getRole() {
         return role == null ? null : role.role();
     }
 
+    @Transient
     public PersonRole getPersonRole(){ return role;}
 
     public void setRole(String role){
@@ -69,14 +59,6 @@ public class Person {
 
     public void setRole(PersonRole role) {
         this.role = role;
-    }
-
-    public List<Requirement> getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(List<Requirement> requirements) {
-        this.requirements = requirements;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.khudim.person;
+package com.khudim.dao.person;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +19,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PersonService implements UserDetailsService {
 
 
-    private final PersonRepository personRepository;
+    private PersonRepository personRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public PersonService(PersonRepository personRepository) {
@@ -47,7 +51,6 @@ public class PersonService implements UserDetailsService {
         if (StringUtils.isBlank(code)) {
             throw new IllegalArgumentException("Argument 'code' must not be blank.");
         }
-
         return personRepository.getPerson(code);
     }
 

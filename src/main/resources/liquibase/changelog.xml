@@ -5,4 +5,5 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
    <include file="v_1.0/changelog-v.1.0.xml" relativeToChangelogFile="true"/>
+   <include file="v_1.0/changelog-v.1.1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

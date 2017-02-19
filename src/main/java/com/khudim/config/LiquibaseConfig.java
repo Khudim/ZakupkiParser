@@ -1,11 +1,9 @@
-/*
 package com.khudim.config;
 
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.Assert;
@@ -13,11 +11,6 @@ import org.springframework.util.Assert;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
-
-*/
-/**
- * Created by Beaver.
- *//*
 
 @Configuration
 public class LiquibaseConfig {
@@ -41,7 +34,6 @@ public class LiquibaseConfig {
         liquibase.setChangeLog(changelogFile);
         liquibase.setContexts("test,dev,prod");
         liquibase.setDataSource(dataSource);
-        liquibase.setDefaultSchema("mySchema");
         liquibase.setDropFirst(false);
         liquibase.setShouldRun(true);
 
@@ -52,4 +44,4 @@ public class LiquibaseConfig {
 
         return liquibase;
     }
-}*/
+}

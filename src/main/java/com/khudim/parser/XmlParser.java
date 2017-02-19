@@ -1,12 +1,12 @@
 package com.khudim.parser;
 
-import com.khudim.filter.Requirement;
-import com.khudim.filter.ParseResult;
-import com.khudim.helpers.Tag;
-import org.junit.Test;
+import com.khudim.dao.docs.DocumentsService;
+import com.khudim.document.ContractDocument;
+import com.khudim.document.ExplanationDocument;
+import com.khudim.document.PurchaseDocument;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,28 +15,51 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import static com.khudim.dao.docs.DocumentsType.CONTRACT;
+import static com.khudim.dao.docs.DocumentsType.EXPLANATION;
+import static com.khudim.dao.docs.DocumentsType.PURCHASE;
+
 /**
  * Created by Beaver.
  */
+@Component
 public class XmlParser {
 
-    private static Map<Tag, String> req = new HashMap<>();
+    @Autowired
+    private DocumentsService service;
 
-    static {
-        req.put(Tag.PRICE, null);
-        req.put(Tag.URL, null);
+    @SuppressWarnings("unchecked")
+    public void findDocuments(String dir) {
+        try {
+            Files.walk(Paths.get(dir), FileVisitOption.FOLLOW_LINKS)
+                    .forEach(this::addParsedDocumentToDataBase);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Map<Tag, String> parse(InputStream inputStream, Map<Tag, String> tags) throws IOException {
+    private void addParsedDocumentToDataBase(Path path) {
+        if (path.toString().endsWith(".zip")) {
+            try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(path.toFile()))) {
+                while (inputStream.available() != 0) {
+                    ZipEntry entry = inputStream.getNextEntry();
+                    if (entry != null) {
+                        ZipFile zipFile = new ZipFile(path.toFile());
+                        Document document = parse(zipFile.getInputStream(entry));
+                        fillDocument(document, path);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    public Document parse(InputStream inputStream) throws IOException {
         DocumentBuilderFactory dbFactory;
         DocumentBuilder dBuilder;
         Document doc = null;
@@ -48,51 +71,18 @@ public class XmlParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (doc == null) {
-            return null;
-        }
-        NodeList nodeList;
-        Node node;
-//        tags.forEach((k, v) -> System.out.println(k));
-        for (Map.Entry<Tag, String> entry : tags.entrySet()) {
-            nodeList = doc.getElementsByTagName(entry.getKey().tag());
-            node = nodeList.item(0);
-            if(node!=null) {
-                tags.put(entry.getKey(), node.getTextContent());
-            }
-        }
-        return tags;
-     /*   for(String tag : tags) {
-            nodeList = doc.getElementsByTagName(tag);
-            System.out.println(nodeList.getLength());
-            System.out.println(nodeList.item(0).getTextContent());
-        }
-        for (int temp = 0; temp < nodeList.getLength(); temp++) {
-            Node node = nodeList.item(temp);
-            System.out.println(node.getTextContent());
-        }*/
+        return doc;
     }
 
-    public void take(Path path, Map<Tag, String> tags) {
-        System.err.println(path.getFileName());
-        if (path.toString().endsWith(".zip")) {
-            try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(path.toFile()))) {
-                while (inputStream.available() != 0) {
-                    ZipEntry entry = inputStream.getNextEntry();
-                    if (entry != null) {
-                        ZipFile zipFile = new ZipFile(path.toFile());
-                        parse(zipFile.getInputStream(entry), tags).forEach((k,v)-> System.out.println(k.tag() + " : " + v));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void fillDocument(Document document, Path path) {
+        if (path.toString().contains(CONTRACT.type())) {
+            service.updateDocument(new ContractDocument(document), CONTRACT.type());
+        } else if (path.toString().contains(EXPLANATION.type())) {
+            service.updateDocument(new ExplanationDocument(document), EXPLANATION.type());
+        } else if (path.toString().contains(PURCHASE.type())) {
+            service.updateDocument(new PurchaseDocument(document), PURCHASE.type());
         }
     }
 
-    @Test
-    public void test() throws IOException {
-        String zipFileDir = "C:/Video/";
-        Files.walk(Paths.get(zipFileDir), FileVisitOption.FOLLOW_LINKS).forEach(p -> take(p, req));
-    }
+
 }

@@ -2,13 +2,8 @@ package com.khudim.parser;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-import org.junit.Ignore;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,24 +21,32 @@ public class FtpParser {
     private String ipAddress = "31.173.38.245";
     private String baseWorkDir = "/out";
 
-    private String tempDir;
+    @Autowired
+    private XmlParser xmlParser;
 
-    private final static ExecutorService executorService = Executors.newFixedThreadPool(20);
+    private String tempDir;
+    private final static ExecutorService executorService = Executors.newFixedThreadPool(5);
     private final static List<Future<?>> futures = new CopyOnWriteArrayList<>();
     private final static List<String> excludeName = new ArrayList<>();
 
 
-    public void downloadFiles() throws Exception {
+    public void downloadFiles()  {
         System.out.println("Start download" + tempDir);
         excludeName.add("Rejection");
         recursiveCheck(baseWorkDir);
         for (Future<?> future : futures) {
             try{
-                future.get(50, TimeUnit.SECONDS);
+                try {
+                    future.get(50, TimeUnit.SECONDS);
+                } catch (ExecutionException | TimeoutException e) {
+                    e.printStackTrace();
+                }
             }catch (InterruptedException e ){
                 System.out.println("Can't wait" + e);
             }
         }
+        System.out.println("Start parse Xml");
+        xmlParser.findDocuments(tempDir);
     }
 
     public void recursiveCheck(String path) {

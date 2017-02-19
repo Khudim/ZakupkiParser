@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>TT</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
 </head>
 <body>
 
@@ -10,18 +11,20 @@
 <h1>Thymeleaf 3 + Spring 4 example</h1>
 <p>
     Hello
-    <span th:text="${recipient}">Peter</span>!!!<!--/*@thymesVar id="recipient" type="java.lang.String"*/-->
 </p>
 <div>
-
-   <table border="1">
-    <tr th:each="result : ${results}"><!--/*@thymesVar id="results" type="java.util.List<java.lang.String>"*/-->
-        <td th:text="${result}">6</td>
-        <td th:text="${result}">6</td>
-        <td th:text="${result}">6</td>
-        <td th:text="${result}">6</td>
-    </tr>
-   </table>
+    <table border="1">
+        <!--/*@thymesVar id="documents" type="com.khudim.document.IParsedDocument"*/-->
+        <tr th:each="document : ${documents}">
+            <td th:text="${document.getPrice()}">6</td>
+            <td th:text="${document.getStartDate()}">6</td>
+            <td th:text="${document.getUrl()}">6</td>
+        </tr>
+    </table>
+    <form method="POST" th:action="@{/search}">
+        <input type="text" name="region" autofocus="autofocus"/>
+        <input type="submit" value="Submit now" />
+    </form>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.khudim.person;
+package com.khudim.dao.person;
 
 /**
  * @author hudyshkin
