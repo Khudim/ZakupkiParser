@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class PurchaseDocument extends AbstractDocument implements Serializable {
 
     private String priceTag = Tag.PRICE.tag();
-    private String startDateTag = Tag.PUBLICATION_DATE.tag();
+    private String startDateTag = "ns2:createDateTime";
     private String urlTag = Tag.URL.tag();
     private String guidTag = Tag.GUID.tag();
 

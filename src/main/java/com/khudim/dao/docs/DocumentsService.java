@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import static com.khudim.helpers.ParseHelper.parseDocumentsDate;
+import static com.khudim.helpers.ParseHelper.serializeObject;
+
 /**
  * Created by Beaver.
  */
@@ -27,25 +30,19 @@ public class DocumentsService {
     }
 
     public void updateDocument(IParsedDocument parsedDocument, String type) {
-        ByteArrayOutputStream byteArrayOutputStream= new ByteArrayOutputStream();
-        byte[] bytes = new byte[0];
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-            outputStream.writeObject(parsedDocument);
-            bytes = byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        byte[] bytes = serializeObject(parsedDocument);
         Documents document = new Documents();
         document.setGuid(parsedDocument.getGuid());
-        document.setCreationDate(System.currentTimeMillis());
+        document.setCreationDate(parseDocumentsDate(parsedDocument.getStartDate()));
         document.setDocumentType(type);
         document.setContent(bytes);
+        document.setRegion(parsedDocument.getCity());
         repository.updateDocument(document);
     }
 
     public List<Documents> getAllDocumentsOnPage(String page, int maxResult) {
         int parsedPage = 0;
-        if(StringUtils.isNotBlank(page)) {
+        if (StringUtils.isNotBlank(page)) {
             try {
                 parsedPage = Integer.parseInt(page);
             } catch (NumberFormatException e) {

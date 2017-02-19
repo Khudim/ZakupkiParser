@@ -9,6 +9,7 @@
             <column name="guid" type="VARCHAR(255)">
                 <constraints primaryKey="true" />
             </column>
+            <column name="region" type="VARCHAR(255)"/>
             <column name="document_type" type="VARCHAR(255)"/>
             <column name="creation_date" type="BIGINT"/>
             <column name="content" type="BLOB"/>

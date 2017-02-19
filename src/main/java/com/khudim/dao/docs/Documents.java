@@ -17,6 +17,8 @@ public class Documents implements Serializable{
     private String documentType;
     @Column(name="creation_date")
     private Long creationDate;
+    @Column(name="region")
+    private String region;
     @Column
     private byte[] content;
 
@@ -53,5 +55,13 @@ public class Documents implements Serializable{
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 }

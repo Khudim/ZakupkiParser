@@ -30,16 +30,18 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login").permitAll().defaultSuccessUrl("/index/",true)
+                .loginPage("/login").permitAll().defaultSuccessUrl("/index/0",true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/logout");
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.userDetailsService(personService).passwordEncoder(passwordEncoder());
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

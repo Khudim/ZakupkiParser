@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class ExplanationDocument extends AbstractDocument implements Serializable {
 
     private String priceTag = Tag.PRICE.tag();
-    private String startDateTag = Tag.PUBLICATION_DATE.tag();
+    private String startDateTag = "ns2:creationDate";
     private String urlTag = Tag.URL.tag();
     private String guidTag = Tag.GUID.tag();
 

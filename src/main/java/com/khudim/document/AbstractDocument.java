@@ -12,12 +12,13 @@ import java.io.Serializable;
 /**
  * Created by Beaver.
  */
-public abstract class AbstractDocument implements IParsedDocument , Serializable {
+public abstract class AbstractDocument implements IParsedDocument, Serializable {
 
     protected String price = "1";
     protected String startDate = "2";
     protected String url = "3";
     protected String guid = "4";
+    protected String city = "test";
 
     protected String getContent(String tag, Document document) {
         NodeList nodeList = document.getElementsByTagName(tag);
@@ -42,9 +43,14 @@ public abstract class AbstractDocument implements IParsedDocument , Serializable
     public String getUrl() {
         return url;
     }
+
     @Override
     public String getGuid() {
         return guid;
     }
 
+    @Override
+    public String getCity() {
+        return city;
+    }
 }

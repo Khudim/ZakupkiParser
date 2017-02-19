@@ -4,6 +4,7 @@ import com.khudim.dao.docs.DocumentsService;
 import com.khudim.document.ContractDocument;
 import com.khudim.document.ExplanationDocument;
 import com.khudim.document.PurchaseDocument;
+import com.khudim.helpers.ParseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -22,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import static com.khudim.dao.docs.DocumentsType.CONTRACT;
 import static com.khudim.dao.docs.DocumentsType.EXPLANATION;
 import static com.khudim.dao.docs.DocumentsType.PURCHASE;
+import static com.khudim.helpers.ParseHelper.isLastDayModified;
 
 /**
  * Created by Beaver.
@@ -35,7 +37,9 @@ public class XmlParser {
     @SuppressWarnings("unchecked")
     public void findDocuments(String dir) {
         try {
-            Files.walk(Paths.get(dir), FileVisitOption.FOLLOW_LINKS)
+            Path paths = Paths.get(dir);
+            Files.walk(paths, FileVisitOption.FOLLOW_LINKS)
+                    .filter(ParseHelper::isLastDayModified)
                     .forEach(this::addParsedDocumentToDataBase);
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,6 +87,5 @@ public class XmlParser {
             service.updateDocument(new PurchaseDocument(document), PURCHASE.type());
         }
     }
-
 
 }

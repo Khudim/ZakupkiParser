@@ -8,4 +8,5 @@ public interface IParsedDocument {
     String getUrl();
     String getStartDate();
     String getGuid();
+    String getCity();
 }
