@@ -1,8 +1,11 @@
+/*
 package com.khudim.config;
 
+*/
 /**
  * Created by Beaver.
- */
+ *//*
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
@@ -10,9 +13,11 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+*/
 /**
  * Spring configuration and Spring MVC bootstrapping.
- */
+ *//*
+
 public class SpringWebInitializer implements WebApplicationInitializer {
 
     @Override
@@ -25,4 +30,4 @@ public class SpringWebInitializer implements WebApplicationInitializer {
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
     }
-}
+}*/

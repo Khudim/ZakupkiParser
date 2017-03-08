@@ -17,11 +17,18 @@ public class PurchaseDocument extends AbstractDocument implements Serializable {
     private String urlTag = Tag.URL.tag();
     private String guidTag = Tag.GUID.tag();
 
+    private String type = "purchase";
+
     public PurchaseDocument(Document document){
         this.price = getContent(priceTag,document);
         this.startDate = getContent(startDateTag,document);
         this.url = getContent(urlTag,document);
         this.guid = getContent(guidTag,document);
+        this.city = getCityFromPlacer(document);
     }
 
+    @Override
+    public String getType() {
+        return type;
+    }
 }

@@ -9,4 +9,5 @@ public interface IParsedDocument {
     String getStartDate();
     String getGuid();
     String getCity();
+    String getType();
 }

@@ -15,11 +15,18 @@ public class ExplanationDocument extends AbstractDocument implements Serializabl
     private String urlTag = Tag.URL.tag();
     private String guidTag = Tag.GUID.tag();
 
+    private String type = "explanation";
+
     public ExplanationDocument(Document document){
         this.price = getContent(priceTag,document);
         this.startDate = getContent(startDateTag,document);
         this.url = getContent(urlTag,document);
         this.guid = getContent(guidTag,document);
+        this.city = getCityFromPlacer(document);
     }
 
+    @Override
+    public String getType() {
+        return type;
+    }
 }

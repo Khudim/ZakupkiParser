@@ -3,10 +3,13 @@ package com.khudim.dao.docs;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.Doc;
 import java.util.List;
 
 /**
@@ -36,7 +39,19 @@ public class DocumentsRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Documents> getAllDocumentsOnPage(int page, int maxResult) {
-        return getCriteria().setFirstResult(page * maxResult).setMaxResults(maxResult).list();
+    public List<Documents> getAllDocumentsFrom(int loadFrom, int maxResult) {
+        return getCriteria()
+                .setFirstResult(loadFrom)
+                .setMaxResults(maxResult)
+                .list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Documents> getAllDocuments(){
+        return getCriteria().list();
+    }
+
+    public long getAllDocumentsCount() {
+       return (long)getCriteria().setProjection(Projections.rowCount()).uniqueResult();
     }
 }

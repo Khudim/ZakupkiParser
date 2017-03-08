@@ -1,12 +1,9 @@
 package com.khudim.document;
 
-import org.apache.derby.iapi.services.io.ArrayInputStream;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -29,28 +26,47 @@ public abstract class AbstractDocument implements IParsedDocument, Serializable 
         return node.getTextContent();
     }
 
-    @Override
-    public String getPrice() {
-        return price;
+    public String getCityFromPlacer(Document document) {
+        NodeList nodeList = document.getElementsByTagName("ns2:placer");
+        Node node = nodeList.item(0);
+        String content = node.getTextContent();
+        String[] splitedContent = content.split("\\n");
+        for (String string : splitedContent) {
+            if (string.contains(" г ") || string.contains(" ул ") || string.contains(" дом ")) {
+                String[] split = string.split(",");
+                for (String s : split) {
+                    if (s.contains(" г ")) {
+                       return s;
+                    }
+                }
+            }
+        }
+        return "-";
     }
 
-    @Override
-    public String getStartDate() {
-        return startDate;
-    }
+        @Override
+        public String getPrice () {
+            return price;
+        }
 
-    @Override
-    public String getUrl() {
-        return url;
-    }
+        @Override
+        public String getStartDate () {
+            return startDate;
+        }
 
-    @Override
-    public String getGuid() {
-        return guid;
-    }
+        @Override
+        public String getUrl () {
+            return url;
+        }
 
-    @Override
-    public String getCity() {
-        return city;
-    }
+        @Override
+        public String getGuid () {
+            return guid;
+        }
+
+        @Override
+        public String getCity () {
+            return city;
+        }
+
 }

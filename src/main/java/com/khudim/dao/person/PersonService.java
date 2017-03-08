@@ -18,11 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class PersonService implements UserDetailsService {
 
-
     private PersonRepository personRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public PersonService(PersonRepository personRepository) {

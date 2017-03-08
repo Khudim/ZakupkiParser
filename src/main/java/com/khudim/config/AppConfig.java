@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -32,8 +32,8 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableWebMvc
 @EnableScheduling
+@EnableWebMvc
 @PropertySource(value = { "classpath:application.properties" })
 @ComponentScan(basePackages = "com.khudim")
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
@@ -45,6 +45,11 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
     @Bean
