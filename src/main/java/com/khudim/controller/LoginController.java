@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginPage(Model model, HttpServletRequest request) {
-        model.addAttribute("page", request.getSession().getAttribute("page"));
+    public String getLoginPage() {
         return "login";
     }
 

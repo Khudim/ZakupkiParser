@@ -25,11 +25,12 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/").hasRole(PersonRole.ADMIN.role())
+                .authorizeRequests()
+                .antMatchers("/").hasAnyRole(PersonRole.ADMIN.role(), PersonRole.USER.role()).antMatchers("/admin/*").hasRole(PersonRole.ADMIN.role())
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login").permitAll().defaultSuccessUrl("/",true)
+                .loginPage("/login").permitAll().successForwardUrl("/login")
                 .and()
                 .rememberMe().tokenValiditySeconds(129680).rememberMeParameter("remember-me")
                 .and()

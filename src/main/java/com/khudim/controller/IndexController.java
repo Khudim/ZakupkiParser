@@ -7,14 +7,13 @@ package com.khudim.controller;
 import com.khudim.dao.DataTableObject;
 import com.khudim.dao.docs.Documents;
 import com.khudim.dao.docs.DocumentsService;
+import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -31,14 +30,11 @@ public class IndexController {
     private PersonService personService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index() {
+    public String index(HttpServletRequest request, Model model) {
+        String userName = (String) request.getSession().getAttribute("personCode");
+        Person person = personService.getPerson(userName);
+        model.addAttribute("role", person.getRole());
         return "index";
-    }
-
-
-    @RequestMapping(value = "/1", method = RequestMethod.GET)
-    public String index1() {
-        return "usersTest";
     }
 
     @RequestMapping(value = "/getAllDocuments", method = RequestMethod.POST)
@@ -61,16 +57,6 @@ public class IndexController {
         return dataTableObject;
     }
 
-    @RequestMapping(value = "/getAllUsers", method = RequestMethod.POST)
-    @ResponseBody
-    public DataTableObject getAllUsers( @RequestParam(value = "draw") int draw){
-        DataTableObject dataTableObject = new DataTableObject();
-        dataTableObject.setDraw(draw);
-        dataTableObject.setData(personService.getPersons());
-        dataTableObject.setRecordsFiltered(1);
-        dataTableObject.setRecordsTotal(2);
-        return dataTableObject;
-    }
 
     private Map<Integer, String> findSearchParam(HttpServletRequest request) {
         Map<Integer, String> searchedColumns = new HashMap<>();

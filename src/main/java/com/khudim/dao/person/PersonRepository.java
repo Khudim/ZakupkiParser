@@ -48,4 +48,8 @@ public class PersonRepository {
     protected Criteria createEntityCriteria(){
         return getSession().createCriteria(Person.class);
     }
+
+    public void updatePerson(Person person) {
+        getSession().merge(person);
+    }
 }

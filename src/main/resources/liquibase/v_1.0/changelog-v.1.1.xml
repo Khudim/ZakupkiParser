@@ -15,5 +15,8 @@
             <column name="url" type="VARCHAR(255)"/>
             <column name="price" type="BIGINT"/>
         </createTable>
+        <createIndex tableName="documents" indexName="date">
+            <column name="creation_date" type="VARCHAR(255)"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

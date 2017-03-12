@@ -4,17 +4,21 @@
 var editor2; // use a global for the submit and return data rendering in the examples
 
 $(document).ready(function() {
-   editor2 = new $.fn.dataTable.Editor( {
-        "ajax": "/getAllUsers",
-        "table": "#users",
+   editor2 = new $.fn.DataTable.Editor( {
+        "ajax": "/admin/editUser",
+        "table": "#usersTable",
+        "idSrc":  'code',
         "fields": [ {
-            "label": "code",
+            "label": "code:",
             "name": "code"
+        },  {
+            "label": "password:",
+            "name": "password"
         }, {
-            "label": "email",
+            "label": "email:",
             "name": "email"
         }, {
-            "label": "role",
+            "label": "role:",
             "name": "role"
         }
         ]
@@ -26,10 +30,10 @@ $(document).ready(function() {
     } );
 
 
-    $('#usersTable').dataTable( {
+    $('#usersTable').DataTable( {
         dom: "Bfrtip",
         ajax: {
-            url: "/getAllUsers",
+            url: "/admin/getAllUsers",
             type: "POST"
         },
         serverSide: true,

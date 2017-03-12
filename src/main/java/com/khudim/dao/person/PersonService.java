@@ -87,4 +87,8 @@ public class PersonService implements UserDetailsService {
         }
 
     }
+
+    public void updatePerson(Person person) {
+        personRepository.updatePerson(person);
+    }
 }
