@@ -12,6 +12,15 @@ public class Documents implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static String[] columns = new String[4];
+
+    static {
+        columns[0] = "price";
+        columns[1] = "creationDate";
+        columns[2] = "region";
+        columns[3] = "url";
+    }
+
     @Id
     @Column(name = "guid")
     private String guid;
@@ -24,7 +33,7 @@ public class Documents implements Serializable {
     @Column(name = "url")
     private String url;
     @Column(name = "price")
-    private String price;
+    private Double price;
 
     public Documents() {
     }
@@ -69,22 +78,31 @@ public class Documents implements Serializable {
         this.url = url;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public static String getColumnName(int columnNumber) {
+        if (columnNumber >= 0 && columnNumber < columns.length) {
+            return columns[columnNumber];
+        }
+        return "";
     }
 
     @Override
     public String toString() {
-        return guid + ","
-                + documentType + ","
-                + creationDate + ","
-                + region + ","
-                + url + ","
-                + price;
+        return "Documents{" +
+                "guid='" + guid + '\'' +
+                ", documentType='" + documentType + '\'' +
+                ", creationDate=" + creationDate +
+                ", region='" + region + '\'' +
+                ", url='" + url + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 
     @Override

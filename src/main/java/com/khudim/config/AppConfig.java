@@ -5,7 +5,6 @@ package com.khudim.config;
  */
 
 
-import com.khudim.parser.FtpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -28,20 +27,14 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableScheduling
 @EnableWebMvc
-@PropertySource(value = { "classpath:application.properties" })
 @ComponentScan(basePackages = "com.khudim")
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
-
-    @Autowired
-    private Environment environment;
 
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -80,19 +73,6 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
         return new PropertySourcesPlaceholderConfigurer();
-    }
-
-    @Bean
-    public FtpParser ftpParser(){
-        FtpParser ftpParser = new FtpParser();
-        ftpParser.setTempDir(environment.getProperty("parser.tempFolder"));
-        return ftpParser;
-    }
-
-    @Scheduled(cron = "${scheduler.cron}")
-    public void downloadFiles() throws Exception {
-        System.err.println("Start download");
-        ftpParser().downloadFiles();
     }
 
     @Bean

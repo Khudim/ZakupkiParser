@@ -18,7 +18,7 @@ public class ExplanationDocument extends AbstractDocument implements Serializabl
     private String type = "explanation";
 
     public ExplanationDocument(Document document){
-        this.price = getContent(priceTag,document);
+        this.price = Double.parseDouble(getContent(priceTag,document));
         this.startDate = getContent(startDateTag,document);
         this.url = getContent(urlTag,document);
         this.guid = getContent(guidTag,document);

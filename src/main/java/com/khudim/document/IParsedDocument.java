@@ -4,7 +4,7 @@ package com.khudim.document;
  */
 public interface IParsedDocument {
 
-    String getPrice();
+    Double getPrice();
     String getUrl();
     String getStartDate();
     String getGuid();

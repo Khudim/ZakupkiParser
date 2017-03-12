@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:purchaseContractAccount xsi:schemaLocation="http://zakupki.gov.ru/223/integration/schema/TFF-5.2 http://zakupki.gov.ru/223/integration/schema/TFF-5.2/purchase.xsd" xmlns="http://zakupki.gov.ru/223fz/types/1" xmlns:ns10="http://zakupki.gov.ru/223fz/reference/1" xmlns:ns11="http://zakupki.gov.ru/223fz/stopCommodity/1" xmlns:ns12="http://zakupki.gov.ru/223fz/machineryListInfo/1" xmlns:ns13="http://zakupki.gov.ru/223fz/revenue/1" xmlns:ns14="http://zakupki.gov.ru/223fz/orderClauseList/1" xmlns:ns15="http://zakupki.gov.ru/223fz/contract/1" xmlns:ns16="http://zakupki.gov.ru/223fz/missedNotice/1" xmlns:ns17="http://zakupki.gov.ru/223fz/decisionSuspension/1" xmlns:ns18="http://zakupki.gov.ru/223fz/purchasePlanAdditionalPosition/1" xmlns:ns19="http://zakupki.gov.ru/223fz/webRequest/1" xmlns:ns2="http://zakupki.gov.ru/223fz/purchase/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://zakupki.gov.ru/223fz/dishonestSupplier/1" xmlns:ns4="http://zakupki.gov.ru/223fz/complaint/1" xmlns:ns5="http://zakupki.gov.ru/223fz/notificationIssue/1" xmlns:ns6="http://zakupki.gov.ru/223fz/purchasePlan/1" xmlns:ns7="http://zakupki.gov.ru/223fz/purchasePlanProject/1" xmlns:ns8="http://zakupki.gov.ru/223fz/purchasePlanProjectAdditionalPosition/1" xmlns:ns9="http://zakupki.gov.ru/223fz/disagreementProtocol/1">
+    <header>
+        <guid>71f1f4cf-5ef5-4c82-a714-59472f1886c4</guid>
+        <createDateTime>2017-02-20T17:30:42</createDateTime>
+    </header>
+    <ns2:body>
+        <ns2:item>
+            <guid>2a700b52-0a7e-4433-8aad-fe336e44fce6</guid>
+            <ns2:purchaseContractAccountData>
+                <ns2:guid>2a700b52-0a7e-4433-8aad-fe336e44fce6</ns2:guid>
+                <ns2:creationDateTime>2017-02-20T17:26:59</ns2:creationDateTime>
+                <ns2:urlOOS>https://zakupki.gov.ru/223/purchase/private/purchase/contract-account-info/details.html?contractAccountInfoId=4917591</ns2:urlOOS>
+                <ns2:placer>
+                    <mainInfo>
+                        <fullName>КАЛИНИНГРАДСКИЙ ФИЛИАЛ ФЕДЕРАЛЬНОГО БЮДЖЕТНОГО УЧРЕЖДЕНИЯ "МОРСКАЯ СПАСАТЕЛЬНАЯ СЛУЖБА РОСМОРРЕЧФЛОТА" </fullName>
+                        <shortName>КФ ФБУ "МОРСПАССЛУЖБА РОСМОРРЕЧФЛОТА"</shortName>
+                        <iko>87707274249390643001</iko>
+                        <inn>7707274249</inn>
+                        <kpp>390643001</kpp>
+                        <ogrn>1027739737321</ogrn>
+                        <legalAddress>236003, г. Калининград, ул. Портовая, 24</legalAddress>
+                        <postalAddress>125993, Москва Город, Петровка Улица, дом 3/6, строение 2</postalAddress>
+                        <phone>7-495-6261808</phone>
+                        <fax>7-495-6261809</fax>
+                        <email>info@morspas.com</email>
+                        <okato>27401373000</okato>
+                        <okpo>31832154</okpo>
+                    </mainInfo>
+                </ns2:placer>
+                <ns2:customer>
+                    <mainInfo>
+                        <fullName>КАЛИНИНГРАДСКИЙ ФИЛИАЛ ФЕДЕРАЛЬНОГО БЮДЖЕТНОГО УЧРЕЖДЕНИЯ "МОРСКАЯ СПАСАТЕЛЬНАЯ СЛУЖБА РОСМОРРЕЧФЛОТА" </fullName>
+                        <shortName>КФ ФБУ "МОРСПАССЛУЖБА РОСМОРРЕЧФЛОТА"</shortName>
+                        <iko>87707274249390643001</iko>
+                        <inn>7707274249</inn>
+                        <kpp>390643001</kpp>
+                        <ogrn>1027739737321</ogrn>
+                        <legalAddress>236003, г. Калининград, ул. Портовая, 24</legalAddress>
+                        <postalAddress>125993, Москва Город, Петровка Улица, дом 3/6, строение 2</postalAddress>
+                        <phone>7-495-6261808</phone>
+                        <fax>7-495-6261809</fax>
+                        <email>info@morspas.com</email>
+                        <okato>27401373000</okato>
+                        <okpo>31832154</okpo>
+                    </mainInfo>
+                </ns2:customer>
+                <ns2:period>2017-01-01</ns2:period>
+                <ns2:contractsNumber>0</ns2:contractsNumber>
+                <ns2:contractsOverallCost>0</ns2:contractsOverallCost>
+                <ns2:currency>
+                    <code>RUB</code>
+                    <digitalCode>643</digitalCode>
+                    <name>Российский рубль</name>
+                </ns2:currency>
+                <ns2:publicationDateTime>2017-02-20T17:30:42</ns2:publicationDateTime>
+                <ns2:typeCode>4</ns2:typeCode>
+                <ns2:typeDescription>Договоры, заключенные заказчиком по результатам закупки у субъектов малого и среднего предпринимательства</ns2:typeDescription>
+                <ns2:status>P</ns2:status>
+                <ns2:version>1</ns2:version>
+                <ns2:attachments>
+                    <totalDocumentsCount>1</totalDocumentsCount>
+                    <document>
+                        <guid>69f907d4-0b89-4730-9d57-5da62832bdcd</guid>
+                        <createDateTime>2017-02-20T17:27:10</createDateTime>
+                        <fileName>ежемесячный отчёт за январь 2017.pdf</fileName>
+                        <description>ежемесячный отчёт за январь 2017</description>
+                        <url>http://zakupki.gov.ru/223/purchase/public/download/download.html?id=29535117</url>
+                    </document>
+                </ns2:attachments>
+            </ns2:purchaseContractAccountData>
+        </ns2:item>
+    </ns2:body>
+</ns2:purchaseContractAccount>

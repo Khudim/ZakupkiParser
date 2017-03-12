@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.khudim")
@@ -32,9 +31,10 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll().defaultSuccessUrl("/",true)
                 .and()
+                .rememberMe().tokenValiditySeconds(129680).rememberMeParameter("remember-me")
+                .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/logout");
+                .logoutSuccessUrl("/login?logout");
     }
 
     @Override
@@ -46,6 +46,5 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
 
 }

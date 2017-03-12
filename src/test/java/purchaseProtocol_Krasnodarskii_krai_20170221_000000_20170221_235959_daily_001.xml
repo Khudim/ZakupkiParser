@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:purchaseProtocol xsi:schemaLocation="http://zakupki.gov.ru/223/integration/schema/TFF-5.2 http://zakupki.gov.ru/223/integration/schema/TFF-5.2/purchase.xsd" xmlns="http://zakupki.gov.ru/223fz/types/1" xmlns:ns10="http://zakupki.gov.ru/223fz/reference/1" xmlns:ns11="http://zakupki.gov.ru/223fz/stopCommodity/1" xmlns:ns12="http://zakupki.gov.ru/223fz/machineryListInfo/1" xmlns:ns13="http://zakupki.gov.ru/223fz/revenue/1" xmlns:ns14="http://zakupki.gov.ru/223fz/orderClauseList/1" xmlns:ns15="http://zakupki.gov.ru/223fz/contract/1" xmlns:ns16="http://zakupki.gov.ru/223fz/missedNotice/1" xmlns:ns17="http://zakupki.gov.ru/223fz/decisionSuspension/1" xmlns:ns18="http://zakupki.gov.ru/223fz/purchasePlanAdditionalPosition/1" xmlns:ns19="http://zakupki.gov.ru/223fz/webRequest/1" xmlns:ns2="http://zakupki.gov.ru/223fz/purchase/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://zakupki.gov.ru/223fz/dishonestSupplier/1" xmlns:ns4="http://zakupki.gov.ru/223fz/complaint/1" xmlns:ns5="http://zakupki.gov.ru/223fz/notificationIssue/1" xmlns:ns6="http://zakupki.gov.ru/223fz/purchasePlan/1" xmlns:ns7="http://zakupki.gov.ru/223fz/purchasePlanProject/1" xmlns:ns8="http://zakupki.gov.ru/223fz/purchasePlanProjectAdditionalPosition/1" xmlns:ns9="http://zakupki.gov.ru/223fz/disagreementProtocol/1">
+    <header>
+        <guid>c816a33a-76f3-40e9-b994-f68c24cf047e</guid>
+        <createDateTime>2017-02-21T08:50:40</createDateTime>
+    </header>
+    <ns2:body>
+        <ns2:item>
+            <guid>3908773b-8910-4a4d-a7fe-f9723cac53e9</guid>
+            <ns2:purchaseProtocolData>
+                <ns2:guid>3908773b-8910-4a4d-a7fe-f9723cac53e9</ns2:guid>
+                <ns2:createDateTime>2017-02-20T13:38:52</ns2:createDateTime>
+                <ns2:urlOOS>https://zakupki.gov.ru/223/purchase/private/purchase/protocol-info/details.html?protocolInfoId=6325478</ns2:urlOOS>
+                <ns2:purchaseInfo>
+                    <purchaseNoticeNumber>31704712239</purchaseNoticeNumber>
+                    <name>Оперативное предоставление сотрудникам Банка сведений о зарегистрированных юридических лицах, используемых сотрудниками Банка для анализа регистрационных и финансовых данных юридических лиц и индивидуальных предпринимателей России, Украины, Казахстана, Белоруссии, Кыргызстана, Молдовы		</name>
+                    <purchaseMethodCode>4228</purchaseMethodCode>
+                    <purchaseCodeName>Открытый одноэтапный конкурс</purchaseCodeName>
+                    <emergency>false</emergency>
+                </ns2:purchaseInfo>
+                <ns2:registrationNumber>31704712239-01</ns2:registrationNumber>
+                <ns2:placer>
+                    <mainInfo>
+                        <fullName>ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО "КРАСНОДАРСКИЙ КРАЕВОЙ ИНВЕСТИЦИОННЫЙ БАНК"</fullName>
+                        <shortName>ПАО "КРАЙИНВЕСТБАНК"</shortName>
+                        <iko>52309074812231001001</iko>
+                        <inn>2309074812</inn>
+                        <kpp>230901001</kpp>
+                        <ogrn>1022300000029</ogrn>
+                        <legalAddress>350063КРАЙ КРАСНОДАРСКИЙ, Г КРАСНОДАР, УЛ МИРА, 34</legalAddress>
+                        <postalAddress>350063, Краснодарский Край, Краснодар Город, Мира Улица, дом 34</postalAddress>
+                        <phone>7-861-2104958</phone>
+                        <email>ucadmin@kibank.ru</email>
+                        <okato>03401369000</okato>
+                        <okpo>55951900</okpo>
+                    </mainInfo>
+                </ns2:placer>
+                <ns2:customer>
+                    <mainInfo>
+                        <fullName>ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО "КРАСНОДАРСКИЙ КРАЕВОЙ ИНВЕСТИЦИОННЫЙ БАНК"</fullName>
+                        <shortName>ПАО "КРАЙИНВЕСТБАНК"</shortName>
+                        <iko>52309074812231001001</iko>
+                        <inn>2309074812</inn>
+                        <kpp>230901001</kpp>
+                        <ogrn>1022300000029</ogrn>
+                        <legalAddress>350063КРАЙ КРАСНОДАРСКИЙ, Г КРАСНОДАР, УЛ МИРА, 34</legalAddress>
+                        <postalAddress>350063, Краснодарский Край, Краснодар Город, Мира Улица, дом 34</postalAddress>
+                        <phone>7-861-2104958</phone>
+                        <email>ucadmin@kibank.ru</email>
+                        <okato>03401369000</okato>
+                        <okpo>55951900</okpo>
+                    </mainInfo>
+                </ns2:customer>
+                <ns2:publicationDateTime>2017-02-21T08:50:40</ns2:publicationDateTime>
+                <ns2:status>P</ns2:status>
+                <ns2:version>1</ns2:version>
+                <ns2:attachments>
+                    <totalDocumentsCount>1</totalDocumentsCount>
+                    <document>
+                        <guid>1ac48cc0-efb6-4c96-928e-acc047940cd6</guid>
+                        <createDateTime>2017-02-21T08:47:50</createDateTime>
+                        <fileName>Протокол вскрытия конвертов.docx</fileName>
+                        <description>Протокол вскрытия конвертов</description>
+                        <url>http://zakupki.gov.ru/223/purchase/public/download/download.html?id=29542644</url>
+                    </document>
+                </ns2:attachments>
+                <ns2:type>15721</ns2:type>
+                <ns2:typeName>Протокол вскрытия конвертов</ns2:typeName>
+                <ns2:procedureDate>2017-02-20T11:00:00</ns2:procedureDate>
+                <ns2:procedurePlace>350063, Краснодарский край, г. Краснодар, ул. Мира, 34, каб. 201</ns2:procedurePlace>
+                <ns2:lotApplicationsList>
+                    <ns2:protocolLotApplications>
+                        <ns2:lot>
+                            <ns2:guid>f6567dea-ab22-4722-9f04-55fa054e79d3</ns2:guid>
+                            <ns2:ordinalNumber>1</ns2:ordinalNumber>
+                            <ns2:subject>Оперативное предоставление сотрудникам Банка сведений о зарегистрированных юридических лицах, используемых сотрудниками Банка для анализа регистрационных и финансовых данных юридических лиц и индивидуальных предпринимателей России, Украины, Казахстана, Белоруссии, Кыргызстана, Молдовы</ns2:subject>
+                            <ns2:currency>
+                                <code>RUB</code>
+                                <digitalCode>643</digitalCode>
+                                <name>Российский рубль</name>
+                            </ns2:currency>
+                            <ns2:initialSum>1055628</ns2:initialSum>
+                        </ns2:lot>
+                        <ns2:application>
+                            <ns2:applicationDate>2017-02-17T12:09:00</ns2:applicationDate>
+                            <ns2:applicationNumber>1</ns2:applicationNumber>
+                            <ns2:notDishonest>true</ns2:notDishonest>
+                            <ns2:provider>true</ns2:provider>
+                            <ns2:supplierInfo>
+                                <name>ООО "Информационное агентство "Интерфакс-Юг"</name>
+                                <inn>7710713055</inn>
+                                <kpp>771001001</kpp>
+                                <ogrn>1087746455411</ogrn>
+                                <type>L</type>
+                                <address>127006 г.Москва ул. Тверская-Ямская 1-я д.2 стр.1</address>
+                            </ns2:supplierInfo>
+                            <ns2:price>1055628</ns2:price>
+                            <ns2:currency>
+                                <code>RUB</code>
+                                <digitalCode>643</digitalCode>
+                                <name>Российский рубль</name>
+                            </ns2:currency>
+                            <ns2:contractExecutionTerm>1 год</ns2:contractExecutionTerm>
+                            <ns2:accepted>N</ns2:accepted>
+                        </ns2:application>
+                    </ns2:protocolLotApplications>
+                </ns2:lotApplicationsList>
+                <ns2:protocolSignDate>2017-02-20</ns2:protocolSignDate>
+            </ns2:purchaseProtocolData>
+        </ns2:item>
+    </ns2:body>
+</ns2:purchaseProtocol>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:purchaseContractAccount xsi:schemaLocation="http://zakupki.gov.ru/223/integration/schema/TFF-5.2 http://zakupki.gov.ru/223/integration/schema/TFF-5.2/purchase.xsd" xmlns="http://zakupki.gov.ru/223fz/types/1" xmlns:ns10="http://zakupki.gov.ru/223fz/decisionSuspension/1" xmlns:ns11="http://zakupki.gov.ru/223fz/purchasePlanAdditionalPosition/1" xmlns:ns12="http://zakupki.gov.ru/223fz/machineryListInfo/1" xmlns:ns13="http://zakupki.gov.ru/223fz/revenue/1" xmlns:ns14="http://zakupki.gov.ru/223fz/orderClauseList/1" xmlns:ns15="http://zakupki.gov.ru/223fz/disagreementProtocol/1" xmlns:ns16="http://zakupki.gov.ru/223fz/complaint/1" xmlns:ns17="http://zakupki.gov.ru/223fz/notificationIssue/1" xmlns:ns18="http://zakupki.gov.ru/223fz/purchasePlanProject/1" xmlns:ns19="http://zakupki.gov.ru/223fz/webRequest/1" xmlns:ns2="http://zakupki.gov.ru/223fz/purchase/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://zakupki.gov.ru/223fz/dishonestSupplier/1" xmlns:ns4="http://zakupki.gov.ru/223fz/purchasePlanProjectAdditionalPosition/1" xmlns:ns5="http://zakupki.gov.ru/223fz/purchasePlan/1" xmlns:ns6="http://zakupki.gov.ru/223fz/contract/1" xmlns:ns7="http://zakupki.gov.ru/223fz/missedNotice/1" xmlns:ns8="http://zakupki.gov.ru/223fz/reference/1" xmlns:ns9="http://zakupki.gov.ru/223fz/stopCommodity/1">
+    <header>
+        <guid>a16a590c-06c3-4c98-a732-5a0f7bca8391</guid>
+        <createDateTime>2017-02-07T08:34:24</createDateTime>
+    </header>
+    <ns2:body>
+        <ns2:item>
+            <guid>3dde2016-7f9a-492c-94b1-84cdb17ee06d</guid>
+            <ns2:purchaseContractAccountData>
+                <ns2:guid>3dde2016-7f9a-492c-94b1-84cdb17ee06d</ns2:guid>
+                <ns2:creationDateTime>2017-02-07T15:34:06</ns2:creationDateTime>
+                <ns2:urlOOS>https://zakupki.gov.ru/223/purchase/private/purchase/contract-account-info/details.html?contractAccountInfoId=4818300</ns2:urlOOS>
+                <ns2:placer>
+                    <mainInfo>
+                        <fullName>МУНИЦИПАЛЬНОЕ АВТОНОМНОЕ ДОШКОЛЬНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ДЕТСКИЙ САД  № 2</fullName>
+                        <shortName>МАДОУ ДЕТСКИЙ САД  № 2</shortName>
+                        <iko>52723042567272301001</iko>
+                        <inn>2723042567</inn>
+                        <kpp>272301001</kpp>
+                        <ogrn>1022701192304</ogrn>
+                        <legalAddress>680003, ХАБАРОВСКИЙ, ХАБАРОВСК, СОЮЗНАЯ, дом 7А</legalAddress>
+                        <postalAddress>680003, ХАБАРОВСКИЙ, ХАБАРОВСК, СОЮЗНАЯ, дом 7А</postalAddress>
+                        <phone>7-4212-513760</phone>
+                        <email>habdetsad@yandex.ru</email>
+                        <okato>08401365000</okato>
+                        <okpo>52219446</okpo>
+                    </mainInfo>
+                </ns2:placer>
+                <ns2:customer>
+                    <mainInfo>
+                        <fullName>МУНИЦИПАЛЬНОЕ АВТОНОМНОЕ ДОШКОЛЬНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ДЕТСКИЙ САД  № 2</fullName>
+                        <shortName>МАДОУ ДЕТСКИЙ САД  № 2</shortName>
+                        <iko>52723042567272301001</iko>
+                        <inn>2723042567</inn>
+                        <kpp>272301001</kpp>
+                        <ogrn>1022701192304</ogrn>
+                        <legalAddress>680003, ХАБАРОВСКИЙ, ХАБАРОВСК, СОЮЗНАЯ, дом 7А</legalAddress>
+                        <postalAddress>680003, ХАБАРОВСКИЙ, ХАБАРОВСК, СОЮЗНАЯ, дом 7А</postalAddress>
+                        <phone>7-4212-513760</phone>
+                        <email>habdetsad@yandex.ru</email>
+                        <okato>08401365000</okato>
+                        <okpo>52219446</okpo>
+                    </mainInfo>
+                </ns2:customer>
+                <ns2:period>2015-04-01</ns2:period>
+                <ns2:contractsNumber>0</ns2:contractsNumber>
+                <ns2:contractsOverallCost>0</ns2:contractsOverallCost>
+                <ns2:currency>
+                    <code>RUB</code>
+                    <digitalCode>643</digitalCode>
+                    <name>Российский рубль</name>
+                </ns2:currency>
+                <ns2:publicationDateTime>2017-02-07T15:34:23</ns2:publicationDateTime>
+                <ns2:typeCode>4</ns2:typeCode>
+                <ns2:typeDescription>Договоры, заключенные заказчиком по результатам закупки у субъектов малого и среднего предпринимательства</ns2:typeDescription>
+                <ns2:status>P</ns2:status>
+                <ns2:version>1</ns2:version>
+                <ns2:attachments/>
+            </ns2:purchaseContractAccountData>
+        </ns2:item>
+    </ns2:body>
+</ns2:purchaseContractAccount>

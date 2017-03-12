@@ -13,7 +13,7 @@
             <column name="document_type" type="VARCHAR(255)"/>
             <column name="creation_date" type="BIGINT"/>
             <column name="url" type="VARCHAR(255)"/>
-            <column name="price" type="VARCHAR(255)"/>
+            <column name="price" type="BIGINT"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

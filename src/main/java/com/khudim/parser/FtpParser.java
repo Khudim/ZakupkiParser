@@ -1,9 +1,20 @@
 package com.khudim.parser;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +26,9 @@ import java.util.concurrent.*;
 /**
  * Created by Beaver.
  */
+@Component
+@EnableScheduling
+@PropertySource(value = {"classpath:application.properties"})
 public class FtpParser {
 
     private String login = "fz223free";
@@ -25,24 +39,37 @@ public class FtpParser {
     private XmlParser xmlParser;
 
     private String tempDir;
-    private final static ExecutorService executorService = Executors.newFixedThreadPool(5);
-    private final static List<Future<?>> futures = new CopyOnWriteArrayList<>();
-    private final static List<String> excludeName = new ArrayList<>();
 
+    private ExecutorService executorService;
 
-    public void downloadFiles()  {
+    private final List<Future<?>> futures = new CopyOnWriteArrayList<>();
+    private final List<String> excludeName = new ArrayList<>();
+
+    @Autowired
+    public FtpParser(@Value("${parser.tempFolder}") String tempDir,
+                     @Value("${parser.threadNumber}") int threadNumber) {
+        this.tempDir = tempDir;
+        executorService = Executors
+                .newFixedThreadPool(threadNumber, new BasicThreadFactory.Builder()
+                        .daemon(true)
+                        .namingPattern("download-documents-%1d")
+                        .build());
+    }
+
+    @Scheduled(cron = "${scheduler.cron}")
+    public void downloadFiles() {
         System.out.println("Start download" + tempDir);
         excludeName.add("Rejection");
         recursiveCheck(baseWorkDir);
         for (Future<?> future : futures) {
-            try{
+            try {
                 try {
-                    future.get(50, TimeUnit.SECONDS);
+                    future.get(100, TimeUnit.SECONDS);
                 } catch (ExecutionException | TimeoutException e) {
                     e.printStackTrace();
                 }
-            }catch (InterruptedException e ){
-                System.out.println("Can't wait" + e);
+            } catch (InterruptedException e) {
+              //  System.out.println("Can't wait" + e);
             }
         }
         System.out.println("Start parse Xml");
@@ -122,6 +149,12 @@ public class FtpParser {
     }
 
     public void setTempDir(String tempDir) {
-       this.tempDir = tempDir;
+        this.tempDir = tempDir;
     }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
 }

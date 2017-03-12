@@ -46,6 +46,6 @@ public class PersonRepository {
     }
 
     protected Criteria createEntityCriteria(){
-        return getSession().createCriteria(PersonRepository.class);
+        return getSession().createCriteria(Person.class);
     }
 }

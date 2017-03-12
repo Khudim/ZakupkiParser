@@ -10,6 +10,11 @@
 #auth-form {
     width: 350px;
 }
+.dataTables_filter { display: none; }
+
+td.editable {
+    font-weight: bold;
+}
 
 #auth-persons-list {
     margin-top: 10px;
@@ -17,6 +22,10 @@
     width: 200px;
     display: inline-block;
     float: right;
+}
+
+.bs-bar {
+    margin: 20px;
 }
 
 #button-login {

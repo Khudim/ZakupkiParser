@@ -15,7 +15,7 @@ public class DataTableObject {
 
     private long recordsFiltered;
 
-    private List<Documents> data;
+    private List<?> data;
 
     public int getDraw() {
         return draw;
@@ -41,11 +41,11 @@ public class DataTableObject {
         this.recordsFiltered = recordsFiltered;
     }
 
-    public List<Documents> getData() {
+    public List<?> getData() {
         return data;
     }
 
-    public void setData(List<Documents> data) {
+    public void setData(List<?> data) {
         this.data = data;
     }
 

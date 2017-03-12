@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public abstract class AbstractDocument implements IParsedDocument, Serializable {
 
-    protected String price = "1";
+    protected Double price = 0d;
     protected String startDate = "2";
     protected String url = "3";
     protected String guid = "4";
@@ -21,7 +21,7 @@ public abstract class AbstractDocument implements IParsedDocument, Serializable 
         NodeList nodeList = document.getElementsByTagName(tag);
         Node node = nodeList.item(0);
         if (node == null) {
-            return "";
+            return "0";
         }
         return node.getTextContent();
     }
@@ -45,7 +45,7 @@ public abstract class AbstractDocument implements IParsedDocument, Serializable 
     }
 
         @Override
-        public String getPrice () {
+        public Double getPrice () {
             return price;
         }
 

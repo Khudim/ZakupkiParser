@@ -2,10 +2,11 @@
 <head>
     <title tiles:fragment="title">TT</title>
     <link href="/resources/css/login.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/templates/default/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/templates/default/components/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
     <fieldset>
         <form class="form-signin" th:action="@{/login}" method="post">
 
@@ -15,15 +16,17 @@
             <div th:if="${param.logout}" class="alert alert-success">
                 You have been logged out.
             </div>
-            <h2 class="form-signin-heading">Please login</h2>
-
-            <label> User Name: <input class="form-control" type="text" id="username" name="username" autofocus="autofocus"/> </label>
-            <label> Password: <input class="form-control" type="password" id="password" name="password"/> </label>
-            <button id="#button-login" type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+            <h2 class="form-signin-heading">Login</h2>
+            <input class="form-control" type="text" placeholder="User Name" id="username" name="username"
+                   autofocus="autofocus"/>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                   required=""/>
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+            </label>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
         </form>
     </fieldset>
-
-
 </div>
 </body>
 </html>

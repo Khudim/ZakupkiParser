@@ -20,7 +20,7 @@ public class PurchaseDocument extends AbstractDocument implements Serializable {
     private String type = "purchase";
 
     public PurchaseDocument(Document document){
-        this.price = getContent(priceTag,document);
+        this.price = Double.parseDouble(getContent(priceTag,document));
         this.startDate = getContent(startDateTag,document);
         this.url = getContent(urlTag,document);
         this.guid = getContent(guidTag,document);

@@ -20,7 +20,7 @@ public class ContractDocument extends AbstractDocument implements Serializable {
     private String type = "contract";
 
     public ContractDocument(Document document){
-        this.price = getContent(priceTag,document);
+        this.price = Double.parseDouble(getContent(priceTag,document));
         this.startDate = getContent(startDateTag,document);
         this.url = getContent(urlTag,document);
         this.guid = getContent(guidTag,document);
