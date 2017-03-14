@@ -25,10 +25,10 @@
             <column name="ROLE" value="ADMIN"/>
         </insert>
         <insert tableName="Person">
-        <column name="CODE" value="user"/>
-        <column name="PASSWORD" value="$2a$10$0T/VoPlDQIzC9p3psenX.eCXjTOusDq2JadKaNmlskhlj7lTDem/a"/>
-        <column name="EMAIL" value="USER_EMAIL"/>
-        <column name="ROLE" value="USER"/>
+            <column name="CODE" value="user"/>
+            <column name="PASSWORD" value="$2a$10$0T/VoPlDQIzC9p3psenX.eCXjTOusDq2JadKaNmlskhlj7lTDem/a"/>
+            <column name="EMAIL" value="USER_EMAIL"/>
+            <column name="ROLE" value="USER"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

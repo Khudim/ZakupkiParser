@@ -1,11 +1,16 @@
 package com.khudim.parser;
 
 import com.khudim.dao.docs.DocumentsService;
-import com.khudim.document.ContractDocument;
-import com.khudim.document.ExplanationDocument;
-import com.khudim.document.PurchaseDocument;
+import com.khudim.document.IParsedDocument;
+import com.khudim.document.ParsedDocument;
 import com.khudim.helpers.ParseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
@@ -20,30 +25,37 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import static com.khudim.dao.docs.DocumentsType.CONTRACT;
-import static com.khudim.dao.docs.DocumentsType.EXPLANATION;
-import static com.khudim.dao.docs.DocumentsType.PURCHASE;
-import static com.khudim.helpers.ParseHelper.isLastDayModified;
-
 /**
  * Created by Beaver.
  */
 @Component
+@EnableAsync
+@EnableScheduling
+@PropertySource(value = {"classpath:application.properties"})
 public class XmlParser {
 
-    @Autowired
     private DocumentsService service;
 
-    @SuppressWarnings("unchecked")
-    public void findDocuments(String dir) {
+    private String tempDir;
+    @Async
+    @Scheduled(cron = "${scheduler.xmlParser.cron}")
+    public void findDocuments() {
+        System.out.println("Start search documents " + tempDir);
         try {
-            Path paths = Paths.get(dir);
+            Path paths = Paths.get(tempDir);
             Files.walk(paths, FileVisitOption.FOLLOW_LINKS)
-                    .filter(ParseHelper::isLastDayModified)
+                    //.filter(ParseHelper::isLastDayModified)
                     .forEach(this::addParsedDocumentToDataBase);
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            System.out.println("im done parse xml");
         }
+    }
+    @Autowired
+    public XmlParser(@Value("${parser.tempFolder}") String tempDir, DocumentsService service) {
+        this.tempDir = tempDir;
+        this.service = service;
     }
 
     private void addParsedDocumentToDataBase(Path path) {
@@ -54,7 +66,7 @@ public class XmlParser {
                     if (entry != null) {
                         ZipFile zipFile = new ZipFile(path.toFile());
                         Document document = parse(zipFile.getInputStream(entry));
-                        fillDocument(document, path);
+                        saveDocument(document);
                     }
                 }
             } catch (IOException e) {
@@ -78,14 +90,13 @@ public class XmlParser {
         return doc;
     }
 
-    private void fillDocument(Document document, Path path) {
-        if (path.toString().contains(CONTRACT.type())) {
-            service.updateDocument(new ContractDocument(document), CONTRACT.type());
-        } else if (path.toString().contains(EXPLANATION.type())) {
-            service.updateDocument(new ExplanationDocument(document), EXPLANATION.type());
-        } else if (path.toString().contains(PURCHASE.type())) {
-            service.updateDocument(new PurchaseDocument(document), PURCHASE.type());
+    private void saveDocument(Document document) {
+        IParsedDocument parsedDocument = new ParsedDocument();
+        parsedDocument.fillDocument(document);
+        if(parsedDocument.isIncorrectDocument()){
+            return;
         }
+        service.updateDocument(parsedDocument);
     }
 
 }

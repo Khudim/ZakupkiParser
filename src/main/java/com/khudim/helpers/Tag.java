@@ -1,14 +1,18 @@
 package com.khudim.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Beaver.
  */
 public enum Tag {
-    PRICE("ns2:price"),
-    CUSTOMER("ns2:customer"),
-    URL("ns2:urlOOS"),
-    GUID("ns2:guid"),
-    PUBLICATION_DATE("ns2:publicationDate");
+    PRICE("price"),
+    CUSTOMER("customer"),
+    URL("urlOOS"),
+    GUID("guid"),
+    REGION("region"),
+    PUBLICATION_DATE("publicationDate");
 
     private final String tag;
 

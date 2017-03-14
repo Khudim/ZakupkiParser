@@ -19,16 +19,13 @@ $(document).ready(function() {
             "name": "email"
         }, {
             "label": "role:",
-            "name": "role"
+            "name": "role",
+            type: "select",
+            options: [ "ADMIN", "USER" ],
+            def: "USER"
         }
         ]
     } );
-
-    // Activate an inline edit on click of a table cell
-    $('#usersTable').on( 'click', 'tbody td:not(:first-child)', function (e) {
-        editor2.inline( this );
-    } );
-
 
     $('#usersTable').DataTable( {
         dom: "Bfrtip",
@@ -48,10 +45,7 @@ $(document).ready(function() {
             { data: "email" },
             { data: "role" }
         ],
-        select: {
-            style:    'os',
-            selector: 'td:first-child'
-        },
+        select: true,
         buttons: [
             { extend: "create", editor: editor2 },
             { extend: "edit",   editor: editor2 },

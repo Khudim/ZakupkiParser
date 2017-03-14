@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,6 +30,7 @@ import java.util.concurrent.*;
  * Created by Beaver.
  */
 @Component
+@EnableAsync
 @EnableScheduling
 @PropertySource(value = {"classpath:application.properties"})
 public class FtpParser {
@@ -35,45 +39,22 @@ public class FtpParser {
     private String ipAddress = "31.173.38.245";
     private String baseWorkDir = "/out";
 
-    @Autowired
-    private XmlParser xmlParser;
-
     private String tempDir;
 
-    private ExecutorService executorService;
-
-    private final List<Future<?>> futures = new CopyOnWriteArrayList<>();
     private final List<String> excludeName = new ArrayList<>();
 
     @Autowired
     public FtpParser(@Value("${parser.tempFolder}") String tempDir,
                      @Value("${parser.threadNumber}") int threadNumber) {
         this.tempDir = tempDir;
-        executorService = Executors
-                .newFixedThreadPool(threadNumber, new BasicThreadFactory.Builder()
-                        .daemon(true)
-                        .namingPattern("download-documents-%1d")
-                        .build());
+        excludeName.add("Rejection");
     }
-
-    @Scheduled(cron = "${scheduler.cron}")
+    @Async
+    @Scheduled(cron = "${scheduler.ftpParser.cron}")
     public void downloadFiles() {
         System.out.println("Start download" + tempDir);
-        excludeName.add("Rejection");
         recursiveCheck(baseWorkDir);
-        for (Future<?> future : futures) {
-            try {
-                try {
-                    future.get(100, TimeUnit.SECONDS);
-                } catch (ExecutionException | TimeoutException e) {
-                    e.printStackTrace();
-                }
-            } catch (InterruptedException e) {
-              //  System.out.println("Can't wait" + e);
-            }
-        }
-        System.out.println("Start parse Xml");
-        xmlParser.findDocuments(tempDir);
+        System.out.println("im done parse ftp");
     }
 
     public void recursiveCheck(String path) {
@@ -84,12 +65,13 @@ public class FtpParser {
             FTPFile[] files = client.listFiles(path);
             for (FTPFile ftpFile : files) {
                 if (ftpFile.isDirectory()) {
-                    futures.add(executorService.submit(() -> recursiveCheck(path + "/" + ftpFile.getName())));
+                    recursiveCheck(path + "/" + ftpFile.getName());
                 } else if (isCorrect(ftpFile)) {
                     retrieveThisFile(path, client, ftpFile);
                 }
             }
         } catch (IOException e) {
+            System.out.println("oops start again");
             recursiveCheck(path);
         } finally {
             logoutAndClose(client);
@@ -101,20 +83,16 @@ public class FtpParser {
             client.logout();
             client.disconnect();
         } catch (IOException e) {
+            System.err.println(e.getMessage() + " logout");
             //DO_NOTHING
         }
     }
 
     private boolean isCorrect(FTPFile ftpFile) {
         return ftpFile.isFile()
-                && isTodayFile(ftpFile)
                 && isNotEmpty(ftpFile)
                 && !isExcludeName(ftpFile.getName())
                 && isFirstDownload(ftpFile);
-    }
-
-    private boolean isTodayFile(FTPFile ftpFile) {
-        return System.currentTimeMillis() - ftpFile.getTimestamp().getTimeInMillis() < 60 * 60 * 24 * 2000;
     }
 
     private boolean isFirstDownload(FTPFile ftpFile) {
@@ -136,20 +114,12 @@ public class FtpParser {
         try (OutputStream outputStream = new FileOutputStream(new File(tempDir + ftpFile.getName()))) {
             client.retrieveFile(path + "/" + ftpFile.getName(), outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         if (file.length() < size) {
             System.out.println("Не докачался файл " + ftpFile.getName() + " " + file.length() + " меньше " + size);
             retrieveThisFile(path, client, ftpFile);
         }
-    }
-
-    public String getTempDir() {
-        return tempDir;
-    }
-
-    public void setTempDir(String tempDir) {
-        this.tempDir = tempDir;
     }
 
     @Bean

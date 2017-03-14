@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan("com.khudim")
 public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

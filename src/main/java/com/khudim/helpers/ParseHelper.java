@@ -16,19 +16,18 @@ public class ParseHelper {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         long time = 0;
         if(StringUtils.isBlank(date)){
-            return time;
+            return System.currentTimeMillis();
         }
         try {
             Date parseDate = f.parse(date);
             time =  parseDate.getTime();
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.err.println("wtf "+ date);
         }
         return time;
     }
 
-
     public static boolean isLastDayModified(Path path) {
-        return path.toFile().lastModified() > System.currentTimeMillis() - 60 * 60 * 1000 * 24;
+        return path.toFile().lastModified() > System.currentTimeMillis() - 60 * 60 * 1000 * 24 * 10;
     }
 }

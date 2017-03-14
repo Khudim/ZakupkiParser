@@ -28,11 +28,15 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
     @ResponseBody
-    public DataTableObject editUser(@RequestParam Map<String, String> allRequestParams) {
-        List<Person> persons = parsePersons(allRequestParams);
-        persons.forEach(p -> personService.updatePerson(p));
+    public DataTableObject editUser(@RequestParam Map<String, String> allRequestParams, @RequestParam(required = false) String action) {
         DataTableObject dataTableObject = new DataTableObject();
-        dataTableObject.setData(persons);
+        List<Person> persons = parsePersons(allRequestParams);
+        if ("edit".equals(action) || "create".equals(action)) {
+            persons.forEach(p -> personService.updatePerson(p));
+            dataTableObject.setData(persons);
+        } else if ("remove".equals(action)) {
+            persons.forEach(p -> personService.deletePerson(p));
+        }
         return dataTableObject;
     }
 
@@ -52,13 +56,22 @@ public class AdminController {
     }
 
     private void addValue(String param, String value, Person person) {
-        String column = param.split("(.+?)]\\[")[1].split("]")[0];
+
+        String[] columns = param.split("(.+?)]\\[");
+        if (columns.length < 2) {
+            return;
+        }
+        String column = columns[1].split("]")[0];
+        updateUser(value, person, column);
+    }
+
+    private void updateUser(String value, Person person, String column) {
         switch (column) {
             case "code":
                 person.setCode(value);
                 break;
             case "password":
-                person.setPassword(value);
+                person.setPassword(new BCryptPasswordEncoder().encode(value));
                 break;
             case "email":
                 person.setEmail(value);

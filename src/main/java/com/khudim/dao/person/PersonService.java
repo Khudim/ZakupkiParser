@@ -54,8 +54,8 @@ public class PersonService implements UserDetailsService {
         return personRepository.getAllPersons();
     }
 
-    public void deletePerson(String personCode) {
-        personRepository.deletePerson(personCode);
+    public void deletePerson(Person person) {
+        personRepository.deletePerson(person);
     }
 
     public void createPerson(Person person) {
@@ -82,7 +82,7 @@ public class PersonService implements UserDetailsService {
         } else if (personRepository.getPerson(editedPerson.getCode()) != null) {
             throw new IllegalArgumentException("Person with code " + editedPerson.getCode() + " already exist");
         } else {
-            personRepository.deletePerson(oldPersonCode);
+            /*personRepository.deletePerson(oldPersonCode);*/
             personRepository.createPerson(editedPerson);
         }
 

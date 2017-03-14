@@ -33,8 +33,8 @@ public class PersonRepository {
         getSession().persist(person);
     }
 
-    public void deletePerson(String personCode) {
-        getSession().delete(personCode);
+    public void deletePerson(Person person) {
+        getSession().delete(person);
     }
 
     public void edit(Person person) {

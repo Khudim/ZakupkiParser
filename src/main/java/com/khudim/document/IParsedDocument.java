@@ -1,4 +1,7 @@
 package com.khudim.document;
+
+import org.w3c.dom.Document;
+
 /**
  * Created by Beaver.
  */
@@ -9,5 +12,6 @@ public interface IParsedDocument {
     String getStartDate();
     String getGuid();
     String getCity();
-    String getType();
+    boolean isIncorrectDocument();
+    void fillDocument(Document document);
 }

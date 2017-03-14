@@ -27,11 +27,10 @@ public class DocumentsService {
         return null;
     }
 
-    public void updateDocument(IParsedDocument parsedDocument, String type) {
+    public void updateDocument(IParsedDocument parsedDocument) {
         Documents document = new Documents();
         document.setGuid(parsedDocument.getGuid());
         document.setCreationDate(parseDocumentsDate(parsedDocument.getStartDate()));
-        document.setDocumentType(type);
         document.setUrl(parsedDocument.getUrl());
         document.setPrice(parsedDocument.getPrice());
         document.setRegion(parsedDocument.getCity());
@@ -42,7 +41,7 @@ public class DocumentsService {
         return repository.getAllDocuments();
     }
 
-    public List<Documents> getPagingDocuments(int start, int length, int columnNumber, String order, Map<Integer,String> restrictions) {
+    public List<Documents> getPagingDocuments(int start, int length, int columnNumber, String order, Map<Integer, String> restrictions) {
         Order criteriaOrder;
         if (StringUtils.isNotBlank(order)) {
             if (order.equals("asc")) {

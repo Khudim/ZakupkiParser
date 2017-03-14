@@ -24,8 +24,6 @@ public class Documents implements Serializable {
     @Id
     @Column(name = "guid")
     private String guid;
-    @Column(name = "document_type")
-    private String documentType;
     @Column(name = "creation_date")
     private Long creationDate;
     @Column(name = "region")
@@ -54,13 +52,6 @@ public class Documents implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public String getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
 
     public String getRegion() {
         return region;
@@ -97,11 +88,10 @@ public class Documents implements Serializable {
     public String toString() {
         return "Documents{" +
                 "guid='" + guid + '\'' +
-                ", documentType='" + documentType + '\'' +
                 ", creationDate=" + creationDate +
                 ", region='" + region + '\'' +
                 ", url='" + url + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 '}';
     }
 
@@ -113,8 +103,6 @@ public class Documents implements Serializable {
         Documents documents = (Documents) o;
 
         if (guid != null ? !guid.equals(documents.guid) : documents.guid != null) return false;
-        if (documentType != null ? !documentType.equals(documents.documentType) : documents.documentType != null)
-            return false;
         if (creationDate != null ? !creationDate.equals(documents.creationDate) : documents.creationDate != null)
             return false;
         if (region != null ? !region.equals(documents.region) : documents.region != null) return false;
@@ -125,7 +113,6 @@ public class Documents implements Serializable {
     @Override
     public int hashCode() {
         int result = guid != null ? guid.hashCode() : 0;
-        result = 31 * result + (documentType != null ? documentType.hashCode() : 0);
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         result = 31 * result + (region != null ? region.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
