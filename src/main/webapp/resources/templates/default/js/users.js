@@ -5,21 +5,21 @@ var editor2; // use a global for the submit and return data rendering in the exa
 
 $(document).ready(function() {
    editor2 = new $.fn.DataTable.Editor( {
-        "ajax": "/admin/editUser",
-        "table": "#usersTable",
-        "idSrc":  'code',
-        "fields": [ {
-            "label": "code:",
-            "name": "code"
+        ajax: "/admin/editUser",
+        table: "#usersTable",
+        idSrc:  'code',
+        fields: [ {
+            label: "code:",
+            name: "code"
         },  {
-            "label": "password:",
-            "name": "password"
+            label: "password:",
+            name: "password"
         }, {
-            "label": "email:",
-            "name": "email"
+            label: "email:",
+            name: "email"
         }, {
-            "label": "role:",
-            "name": "role",
+            label: "role:",
+            name: "role",
             type: "select",
             options: [ "ADMIN", "USER" ],
             def: "USER"

@@ -2,22 +2,22 @@ $(document).ready(function () {
 
     // Activated the table
     var tableClient = $('#tableClient').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            "url": "/getAllDocuments",
-            "type": "POST"
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/getAllDocuments",
+            type: "POST"
         },
-        "columns": [
-            {"data": "price", render: $.fn.dataTable.render.number(',', '.', 0, '\u20bd ')},
+        columns: [
+            {data: "price", render: $.fn.dataTable.render.number(',', '.', 0, '\u20bd ')},
             {
-                "data": "creationDate", render: function (data) {
+                data: "creationDate", render: function (data) {
                 return new Date(data).toUTCString();
             }
             },
-            {"data": "region"},
+            {data: "region"},
             {
-                "data": "url", render: function (data, type) {
+                data: "url", render: function (data, type) {
                 if (type === 'display') {
                     return $('<a>')
                         .attr('href', data)
