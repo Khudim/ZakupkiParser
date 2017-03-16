@@ -82,7 +82,7 @@ public class ParsedDocument implements IParsedDocument, Serializable {
         this.url = getContent(URL, document);
         this.guid = getContent(GUID, document);
         String city = getContent(REGION, document);
-        this.city = city == null ? null : city.trim().startsWith("г.") ? city.substring(2).trim() : city;
+        this.city = city == null ? null : city.trim().toLowerCase().startsWith("г.") ? city.substring(2).trim() : city;
     }
 
     public boolean isIncorrectDocument() {

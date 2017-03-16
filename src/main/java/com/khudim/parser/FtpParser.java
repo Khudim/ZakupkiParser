@@ -118,7 +118,8 @@ public class FtpParser {
         }
         if (file.length() < size) {
             System.out.println("Не докачался файл " + ftpFile.getName() + " " + file.length() + " меньше " + size);
-            retrieveThisFile(path, client, ftpFile);
+            file.delete();
+         //   retrieveThisFile(path, client, ftpFile);
         }
     }
 

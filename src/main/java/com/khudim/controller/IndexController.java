@@ -33,7 +33,7 @@ public class IndexController {
     public String index(HttpServletRequest request, Model model) {
         String userName = (String) request.getSession().getAttribute("personCode");
         Person person = personService.getPerson(userName);
-        model.addAttribute("role", person.getRole());
+        model.addAttribute("user", person);
         return "index";
     }
 
