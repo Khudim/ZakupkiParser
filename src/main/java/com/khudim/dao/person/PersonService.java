@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,10 +28,8 @@ public class PersonService implements UserDetailsService {
         if (personsToExclude == null) {
             throw new IllegalArgumentException("Argument 'personsToExclude' must be not NULL.");
         }
-
         List<Person> possiblePersons = new ArrayList<>(getPersons());
         possiblePersons.removeAll(personsToExclude);
-
         Person person = null;
 
         if (possiblePersons.size() > 0) {
@@ -89,6 +86,10 @@ public class PersonService implements UserDetailsService {
     }
 
     public void updatePerson(Person person) {
+        Person oldPerson = personRepository.getPerson(person.getCode());
+        if(oldPerson==null || !oldPerson.getPassword().equals(person.getPassword())){
+            person.encodePassword();
+        }
         personRepository.updatePerson(person);
     }
 }

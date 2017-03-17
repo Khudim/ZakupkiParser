@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css"
           href="/resources/templates/default/components/bootstrap/css/bootstrap-theme.min.css"/>
 
-    <link rel="stylesheet" type="text/css" href="/resources/templates/default/css/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="/resources/templates/default/css/dataTables.semanticui.min.css"/>
 
     <link rel="stylesheet" type="text/css" href="/resources/templates/default/css/buttons.semanticui.min.css"/>
@@ -16,41 +15,29 @@
 
     <link href="/resources/templates/default/css/custom.css" rel="stylesheet" type="text/css"/>
 
+    <link rel="stylesheet" type="text/css" href="/resources/templates/default/css/semantic.min.css"/>
 </head>
 <body>
 
-<div class="bs-bar">
+<div class="bs-bar" >
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#sectionA">Describe</a></li>
         <li><a data-toggle="tab" href="#sectionB">User info</a></li>
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Documents <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a data-toggle="tab" href="#dropdown1">Contracts</a></li>
-                <li><a data-toggle="tab" href="#dropdown2">Purchase</a></li>
-            </ul>
-        </li>
         <li th:if="${user.getRole()}==ADMIN"><a data-toggle="tab" href="#sectionC">Admin page</a></li>
         <li class="action pull-right"><a data-toggle="tav" th:href="@{/logout}">Logout</a></li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content container">
         <div id="sectionA" class="tab-pane fade in active">
             <h1>Documents search:</h1>
-            <div th:insert="~{documents :: docs}" ></div>
+            <div th:insert="~{documents :: docs}"></div>
         </div>
         <div id="sectionB" class="tab-pane fade in active">
+            <h1> </h1>
             <div th:insert="~{user :: user_info}"></div>
         </div>
         <div id="sectionC" class="tab-pane fade" th:if="${user.getRole()}==ADMIN">
             <h1>Users admin search:</h1>
             <div th:insert="~{admin :: users_table}"></div>
-        </div>
-
-        <div id="dropdown1" class="tab-pane fade">
-            <h3>Dropdown 1</h3>
-        </div>
-        <div id="dropdown2" class="tab-pane fade">
-            <h3>Dropdown 2</h3>
         </div>
     </div>
 </div>
@@ -81,5 +68,12 @@
 
 <script src="/resources/templates/default/js/documents.js"></script>
 <script src="/resources/templates/default/js/users.js"></script>
-
+<style>
+.dataTables_filter {
+display: none;
+}
+.ui.input {
+    display: none;
+}
+</style>
 </html>

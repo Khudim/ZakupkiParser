@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,7 +68,7 @@ public class AdminController {
                 person.setCode(value);
                 break;
             case "password":
-                person.setPassword(new BCryptPasswordEncoder().encode(value));
+                person.setPassword(value);
                 break;
             case "email":
                 person.setEmail(value);

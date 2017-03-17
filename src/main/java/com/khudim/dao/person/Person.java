@@ -1,5 +1,9 @@
 package com.khudim.dao.person;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 
 
@@ -59,6 +63,10 @@ public class Person {
 
     public void setRole(PersonRole role) {
         this.role = role;
+    }
+
+    public void encodePassword(){
+       password = new BCryptPasswordEncoder().encode(password);
     }
 
     @Override

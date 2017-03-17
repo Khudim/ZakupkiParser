@@ -10,7 +10,6 @@
 #auth-form {
     width: 350px;
 }
-.dataTables_filter { display: none; }
 
 td.editable {
     font-weight: bold;
