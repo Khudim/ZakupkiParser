@@ -48,7 +48,7 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
 -->
 
-<script src="/resources/templates/default/js/dataTables/jquery-1.12.4.js"></script>
+<script src="/resources/templates/default/js/dataTables/jquery-3.2.0.min.js"></script>
 
 <script src="/resources/templates/default/js/bootstrap.min.js"></script>
 
@@ -68,6 +68,7 @@
 
 <script src="/resources/templates/default/js/documents.js"></script>
 <script src="/resources/templates/default/js/users.js"></script>
+
 <style>
 .dataTables_filter {
 display: none;
@@ -76,4 +77,9 @@ display: none;
     display: none;
 }
 </style>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 </html>

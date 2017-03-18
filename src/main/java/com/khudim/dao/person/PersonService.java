@@ -39,12 +39,16 @@ public class PersonService implements UserDetailsService {
 
         return person;
     }
+    public Person findPerson(Person person){
+        return findPerson(person);
+    }
 
     public Person getPerson(String code) {
         if (StringUtils.isBlank(code)) {
             throw new IllegalArgumentException("Argument 'code' must not be blank.");
         }
-        return personRepository.getPerson(code);
+        Object object = personRepository.getPerson(code);
+        return object==null ? null : (Person) object;
     }
 
     public List<Person> getPersons() {
@@ -64,7 +68,7 @@ public class PersonService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Person person = personRepository.getPerson(username);
+        Person person = getPerson(username);
         if (person != null) {
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_" + person.getRole()));
@@ -86,7 +90,7 @@ public class PersonService implements UserDetailsService {
     }
 
     public void updatePerson(Person person) {
-        Person oldPerson = personRepository.getPerson(person.getCode());
+        Person oldPerson = getPerson(person.getCode());
         if(oldPerson==null || !oldPerson.getPassword().equals(person.getPassword())){
             person.encodePassword();
         }

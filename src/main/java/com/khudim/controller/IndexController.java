@@ -7,13 +7,17 @@ package com.khudim.controller;
 import com.khudim.dao.DataTableObject;
 import com.khudim.dao.docs.Documents;
 import com.khudim.dao.docs.DocumentsService;
+import com.khudim.dao.notifications.NotificationService;
 import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -28,6 +32,9 @@ public class IndexController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) {

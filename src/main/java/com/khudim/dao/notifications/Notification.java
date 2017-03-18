@@ -1,30 +1,39 @@
 package com.khudim.dao.notifications;
 
+import com.khudim.dao.person.Person;
+
 import javax.persistence.*;
-import java.util.List;
 
 /**
- * Created by Beaver.
+ * @author hudyshkin
  */
 @Entity
+@Table(name = "notification")
 public class Notification {
-
-    public Notification() {
-    }
-    private Integer id;
-
-    private String code;
-
-    private String cron;
-
-    private List<String> regions;
-
-    private List<Integer> prices;
-
-    private Long date;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "code", nullable = false)
+    private Person person;
+
+    @Column
+    private String regions;
+
+    @Column
+    private Long date;
+
+    @Column(name = "min_price")
+    private Integer minPrice;
+
+    @Column(name = "max_price")
+    private Integer maxPrice;
+
+    public Notification() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -33,39 +42,22 @@ public class Notification {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    public String getPerson() {
-        return code;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPerson(String code) {
-        this.code = code;
-    }
-    @Column
-    public String getCron() {
-        return cron;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public void setCron(String cron) {
-        this.cron = cron;
-    }
-    @Column
-    public List<String> getRegions() {
+    public String getRegions() {
         return regions;
     }
-    @Column
-    public void setRegions(List<String> regions) {
+
+    public void setRegions(String regions) {
         this.regions = regions;
     }
-    @Column
-    public List<Integer> getPrices() {
-        return prices;
-    }
 
-    public void setPrices(List<Integer> prices) {
-        this.prices = prices;
-    }
-    @Column
     public Long getDate() {
         return date;
     }
@@ -73,5 +65,19 @@ public class Notification {
     public void setDate(Long date) {
         this.date = date;
     }
+    public Integer getMinPrice() {
+        return minPrice;
+    }
 
+    public void setMinPrice(Integer minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public Integer getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(Integer maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 }

@@ -6,16 +6,15 @@
 
     <changeSet id="createNotificationTable" author="system">
         <createTable tableName="notification">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" />
             </column>
-            <column name="Person" type="VARCHAR(255)"/>
-            <column name="creation_date" type="BIGINT"/>
+            <column name="regions" type="VARCHAR(255)"/>
+            <column name="date" type="BIGINT"/>
             <column name="url" type="VARCHAR(255)"/>
-            <column name="price" type="BIGINT"/>
+            <column name="min_price" type="BIGINT"/>
+            <column name="max_price" type="BIGINT"/>
+            <column name="code" type="VARCHAR(255)"/>
         </createTable>
-        <createIndex tableName="documents" indexName="date">
-            <column name="creation_date" type="VARCHAR(255)"/>
-        </createIndex>
     </changeSet>
 </databaseChangeLog>

@@ -110,7 +110,7 @@ public class FtpParser {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        if (file.length() < size) {
+        if (file.length() + 100 < size) {
             System.out.println("Не докачался файл " + ftpFile.getName() + " " + file.length() + " меньше " + size);
             file.delete();
             //   retrieveThisFile(path, client, ftpFile);

@@ -1,8 +1,10 @@
 package com.khudim.dao.person;
 
+import com.khudim.dao.notifications.Notification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,7 +20,7 @@ public class Person {
 
     private PersonRole role;
 
-    private List<Integer> notificationsId;
+    private List<Notification> notifications = Collections.emptyList();
 
     public Person() {
     }
@@ -66,13 +68,13 @@ public class Person {
         this.role = role;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Person")
-    public List<Integer> getNotifications() {
-        return notificationsId;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person",cascade = CascadeType.ALL)
+    public List<Notification> getNotifications() {
+        return notifications;
     }
 
-    public void setNotifications(List<Integer> notifications) {
-        this.notificationsId = notifications;
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public void encodePassword(){

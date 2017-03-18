@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -20,13 +21,13 @@ public class PersonRepository {
     private SessionFactory sessionFactory;
 
     @SuppressWarnings("unchecked")
-    public Person getPerson(String code){
-        return (Person) getSession().get(Person.class,code);
+    public Object getPerson(String code) {
+        return getSession().get(Person.class, code);
     }
 
     @SuppressWarnings("unchecked")
-    public List<Person> getAllPersons(){
-       return createEntityCriteria().list();
+    public List<Person> getAllPersons() {
+        return createEntityCriteria().list();
     }
 
     public void createPerson(Person person) {
@@ -41,15 +42,16 @@ public class PersonRepository {
         getSession().update(person);
     }
 
-    protected Session getSession(){
+    protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
-    protected Criteria createEntityCriteria(){
+    protected Criteria createEntityCriteria() {
         return getSession().createCriteria(Person.class);
     }
 
     public void updatePerson(Person person) {
         getSession().merge(person);
     }
+
 }

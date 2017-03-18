@@ -17,7 +17,7 @@
         <jdk.version>1.8</jdk.version>
         <testng.version>6.9.4</testng.version>
         <mockito.version>1.10.19</mockito.version>
-        <h2.version>1.4.187</h2.version>
+        <h2.version>1.2.140</h2.version>
         <dbunit.version>2.2</dbunit.version>
     </properties>
 
@@ -116,13 +116,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
-
+        <!-- H2 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>dbunit</groupId>
             <artifactId>dbunit</artifactId>
