@@ -12,6 +12,11 @@ import java.util.Properties;
 public class MailTest {
 
     @Test
+    public void encode() throws Exception {
+        System.out.println();
+    }
+
+    @Test
     public void main() {
         MailTest.sendEmail("hudim@mail.ru", "Email test",
                 "send from Java App", "dmitriykhud@gmail.com",

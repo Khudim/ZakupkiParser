@@ -16,7 +16,7 @@ $(document).ready(function () {
             }
             },
             {data: "region"},
-            {
+     /*       {
                 data: "url", render: function (data, type) {
                 if (type === 'display') {
                     return $('<a>')
@@ -30,9 +30,24 @@ $(document).ready(function () {
                     return data;
                 }
             }
+            },*/
+            {
+                data: "url", render: function (data, type) {
+                if (type === "display") {
+
+                    return $('<a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">')
+                        .text(data)
+                        .wrap('<div></div>')
+                        .parent()
+                        .html();
+                } else {
+                    return data;
+                }
+            }
             }
         ]
     });
+
 
     function filterColumn(i) {
         $('#tableClient').DataTable().column(i).search(
@@ -45,9 +60,5 @@ $(document).ready(function () {
         $('input.column_filter').on('keyup click', function () {
             filterColumn($(this).parents('div').attr('data-column'));
         });
-    });
-
-    $(window).load(function () {
-
     });
 });
