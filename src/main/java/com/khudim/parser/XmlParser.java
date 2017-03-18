@@ -3,7 +3,6 @@ package com.khudim.parser;
 import com.khudim.dao.docs.DocumentsService;
 import com.khudim.document.IParsedDocument;
 import com.khudim.document.ParsedDocument;
-import com.khudim.helpers.ParseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -16,7 +15,9 @@ import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,6 +38,7 @@ public class XmlParser {
     private DocumentsService service;
 
     private String tempDir;
+
     @Async
     @Scheduled(cron = "${scheduler.xmlParser.cron}")
     public void findDocuments() {
@@ -70,7 +72,7 @@ public class XmlParser {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+               // e.printStackTrace();
             }
         }
     }

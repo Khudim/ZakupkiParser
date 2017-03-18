@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="createNotificationTable" author="system">
+        <createTable tableName="notification">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="regions" type="VARCHAR(255)"/>
+            <column name="date" type="BIGINT"/>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="min_price" type="BIGINT"/>
+            <column name="max_price" type="BIGINT"/>
+            <column name="code" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

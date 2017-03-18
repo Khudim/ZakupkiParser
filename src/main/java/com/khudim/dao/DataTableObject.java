@@ -1,7 +1,5 @@
 package com.khudim.dao;
 
-import com.khudim.dao.docs.Documents;
-
 import java.util.List;
 
 /**
@@ -48,7 +46,6 @@ public class DataTableObject {
     public void setData(List<?> data) {
         this.data = data;
     }
-
 
 
 }
