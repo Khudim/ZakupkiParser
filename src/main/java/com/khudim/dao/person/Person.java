@@ -1,10 +1,9 @@
 package com.khudim.dao.person;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -18,6 +17,8 @@ public class Person {
     private String email;
 
     private PersonRole role;
+
+    private List<Integer> notificationsId;
 
     public Person() {
     }
@@ -63,6 +64,15 @@ public class Person {
 
     public void setRole(PersonRole role) {
         this.role = role;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Person")
+    public List<Integer> getNotifications() {
+        return notificationsId;
+    }
+
+    public void setNotifications(List<Integer> notifications) {
+        this.notificationsId = notifications;
     }
 
     public void encodePassword(){

@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="createNotificationTable" author="system">
+        <createTable tableName="notification">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="Person" type="VARCHAR(255)"/>
+            <column name="creation_date" type="BIGINT"/>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="price" type="BIGINT"/>
+        </createTable>
+        <createIndex tableName="documents" indexName="date">
+            <column name="creation_date" type="VARCHAR(255)"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

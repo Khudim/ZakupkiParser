@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
+import static com.khudim.helpers.Tag.PRICE;
+
 /**
  * Created by Beaver.
  */
@@ -67,7 +69,7 @@ public class DocumentsRepository {
         Criteria criteria = getCriteria();
         restrictions.forEach((column, value) -> {
             String columnName = Documents.getColumnName(column);
-            if (("price").equals(columnName)) {
+            if ((PRICE.tag()).equals(columnName)) {
                 criteria.add(Restrictions.ge(columnName, Double.parseDouble(value)));
             } else {
                 criteria.add(Restrictions.like(columnName, value, MatchMode.ANYWHERE));

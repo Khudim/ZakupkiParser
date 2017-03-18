@@ -1,9 +1,10 @@
 $(document).ready(function () {
 
     // Activated the table
-    var tableClient = $('#tableClient').DataTable({
+   $('#tableClient').DataTable({
         processing: true,
         serverSide: true,
+        order: [[ 1, "desc" ]],
         ajax: {
             url: "/getAllDocuments",
             type: "POST"

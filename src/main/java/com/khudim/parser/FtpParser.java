@@ -1,15 +1,11 @@
 package com.khudim.parser;
 
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -17,14 +13,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
 
 /**
  * Created by Beaver.
@@ -44,11 +38,11 @@ public class FtpParser {
     private final List<String> excludeName = new ArrayList<>();
 
     @Autowired
-    public FtpParser(@Value("${parser.tempFolder}") String tempDir,
-                     @Value("${parser.threadNumber}") int threadNumber) {
+    public FtpParser(@Value("${parser.tempFolder}") String tempDir) {
         this.tempDir = tempDir;
         excludeName.add("Rejection");
     }
+
     @Async
     @Scheduled(cron = "${scheduler.ftpParser.cron}")
     public void downloadFiles() {
@@ -119,7 +113,7 @@ public class FtpParser {
         if (file.length() < size) {
             System.out.println("Не докачался файл " + ftpFile.getName() + " " + file.length() + " меньше " + size);
             file.delete();
-         //   retrieveThisFile(path, client, ftpFile);
+            //   retrieveThisFile(path, client, ftpFile);
         }
     }
 
