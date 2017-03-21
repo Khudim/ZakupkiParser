@@ -62,4 +62,8 @@ public class DocumentsService {
     public long getFilterCount(Map<Integer, String> searchedColumns) {
         return repository.getFilterCount(searchedColumns);
     }
+
+    public List<String> getAllRegions() {
+        return repository.getAllRegions();
+    }
 }

@@ -5,6 +5,7 @@ import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * Created by Beaver.
  */
 @Controller
+@Transactional(rollbackFor = Exception.class)
 public class AdminController {
 
     @Autowired
@@ -26,7 +28,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
     @ResponseBody
-    public void editUser(@RequestParam Map<String, String> allRequestParams, @RequestParam(required = false) String action) {
+    public DataTableObject editUser(@RequestParam Map<String, String> allRequestParams, @RequestParam(required = false) String action) {
         DataTableObject dataTableObject = new DataTableObject();
         List<Person> persons = parsePersons(allRequestParams);
         if ("edit".equals(action) || "create".equals(action)) {
@@ -35,6 +37,7 @@ public class AdminController {
         } else if ("remove".equals(action)) {
             persons.forEach(p -> personService.deletePerson(p));
         }
+        return dataTableObject;
     }
 
     private List<Person> parsePersons(Map<String, String> params) {
@@ -76,7 +79,6 @@ public class AdminController {
                 person.setRole(value);
         }
     }
-
 
     @RequestMapping(value = "/admin/getAllUsers", method = RequestMethod.POST)
     @ResponseBody

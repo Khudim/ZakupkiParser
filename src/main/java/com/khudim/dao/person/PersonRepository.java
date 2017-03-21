@@ -42,11 +42,11 @@ public class PersonRepository {
         getSession().update(person);
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
-    protected Criteria createEntityCriteria() {
+    private Criteria createEntityCriteria() {
         return getSession().createCriteria(Person.class);
     }
 

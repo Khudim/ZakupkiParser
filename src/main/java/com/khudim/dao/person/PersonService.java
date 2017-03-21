@@ -39,9 +39,6 @@ public class PersonService implements UserDetailsService {
 
         return person;
     }
-    public Person findPerson(Person person){
-        return findPerson(person);
-    }
 
     public Person getPerson(String code) {
         if (StringUtils.isBlank(code)) {
@@ -72,7 +69,7 @@ public class PersonService implements UserDetailsService {
         if (person != null) {
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_" + person.getRole()));
-            return new User(person.getCode(), person.getPassword(), authorities);
+            return new User(person.getCode(), person.getPassword(),true,true,true,true, authorities);
         }
         throw new UsernameNotFoundException("User " + username + " not found.");
     }
@@ -86,7 +83,6 @@ public class PersonService implements UserDetailsService {
             /*personRepository.deletePerson(oldPersonCode);*/
             personRepository.createPerson(editedPerson);
         }
-
     }
 
     public void updatePerson(Person person) {

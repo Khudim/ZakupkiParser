@@ -35,16 +35,16 @@ public class DocumentsRepository {
         return getSession().createCriteria(Documents.class);
     }
 
-    public Documents getDocumentByGuid(String uuid) {
+    Documents getDocumentByGuid(String uuid) {
         return (Documents) getSession().get(Documents.class, uuid);
     }
 
-    public void updateDocument(Documents documents) {
+    void updateDocument(Documents documents) {
         getSession().saveOrUpdate(documents);
     }
 
     @SuppressWarnings("unchecked")
-    public List<Documents> getAllDocumentsFrom(int loadFrom, int maxResult, Order order, Map<Integer, String> restrictions) {
+    List<Documents> getAllDocumentsFrom(int loadFrom, int maxResult, Order order, Map<Integer, String> restrictions) {
         return addRestrictions(restrictions)
                 .setFirstResult(loadFrom)
                 .setMaxResults(maxResult)
@@ -53,19 +53,19 @@ public class DocumentsRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Documents> getAllDocuments() {
+    List<Documents> getAllDocuments() {
         return getCriteria().list();
     }
 
-    public long getAllDocumentsCount() {
+    long getAllDocumentsCount() {
         return (long) getCriteria().setProjection(Projections.rowCount()).uniqueResult();
     }
 
-    public long getFilterCount(Map<Integer, String> restrictions) {
+    long getFilterCount(Map<Integer, String> restrictions) {
         return (long) addRestrictions(restrictions).setProjection(Projections.rowCount()).uniqueResult();
     }
 
-    public Criteria addRestrictions(Map<Integer, String> restrictions) {
+    private Criteria addRestrictions(Map<Integer, String> restrictions) {
         Criteria criteria = getCriteria();
         restrictions.forEach((column, value) -> {
             String columnName = Documents.getColumnName(column);
@@ -76,5 +76,9 @@ public class DocumentsRepository {
             }
         });
         return criteria;
+    }
+    @SuppressWarnings("unchecked")
+    public List<String> getAllRegions() {
+        return getCriteria().setProjection(Projections.distinct(Projections.property("region"))).list();
     }
 }

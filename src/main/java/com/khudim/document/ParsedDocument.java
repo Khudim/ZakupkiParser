@@ -37,7 +37,7 @@ public class ParsedDocument implements IParsedDocument, Serializable {
     private String guid;
     private String city;
 
-    public String getContent(Tag enumTag, Document document) {
+    private String getContent(Tag enumTag, Document document) {
         for (String tag : tagsMap.get(enumTag)) {
             NodeList nodeList = document.getElementsByTagName(tag);
             Node node = nodeList.item(0);

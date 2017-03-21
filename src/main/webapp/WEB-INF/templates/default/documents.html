@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="docs">
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" style="margin-top: 50px">
         <div class="form-group container">
             <label class="control-label col-sm-2" for="col0_filter">Price:</label>
             <div class="col-sm-10" data-column="0">
@@ -31,6 +31,7 @@
             <table id="tableClient" class="ui celled table" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th class="col-sm-1">Content</th>
                     <th class="col-sm-2">Price</th>
                     <th class="col-sm-2">Date</th>
                     <th class="col-sm-2">City</th>
@@ -39,6 +40,7 @@
                 </thead>
                 <tfoot>
                 <tr>
+                    <th>Content</th>
                     <th>Price</th>
                     <th>Date</th>
                     <th>City</th>

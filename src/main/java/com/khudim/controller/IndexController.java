@@ -12,7 +12,10 @@ import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Transactional(rollbackFor = Exception.class)
 public class IndexController {
 
     @Autowired
@@ -38,10 +42,23 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) {
-        String userName = (String) request.getSession().getAttribute("personCode");
+        String userName = getUser();
         Person person = personService.getPerson(userName);
+        List<String> regions = documentsService.getAllRegions();
+        model.addAttribute("regions",regions);
         model.addAttribute("user", person);
         return "index";
+    }
+
+    private String getUser() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 
     @RequestMapping(value = "/getAllDocuments", method = RequestMethod.POST)

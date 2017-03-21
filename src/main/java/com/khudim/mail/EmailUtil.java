@@ -12,13 +12,6 @@ import java.util.Date;
  */
 public class EmailUtil {
 
-    /**
-     * Utility method to send simple HTML email
-     * @param session
-     * @param toEmail
-     * @param subject
-     * @param body
-     */
     public static void sendEmail(Session session, String toEmail, String subject, String body){
         try
         {

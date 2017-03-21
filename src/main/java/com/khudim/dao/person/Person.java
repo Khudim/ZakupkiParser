@@ -24,6 +24,7 @@ public class Person {
 
     public Person() {
     }
+
     @Id
     @Column(name = "code")
     public String getCode() {
@@ -68,7 +69,7 @@ public class Person {
         this.role = role;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     public List<Notification> getNotifications() {
         return notifications;
     }

@@ -1,12 +1,10 @@
 package com.khudim.helpers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Beaver.
  */
 public enum Tag {
+
     PRICE("price"),
     CUSTOMER("customer"),
     URL("urlOOS"),
