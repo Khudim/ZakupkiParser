@@ -14,11 +14,15 @@ public class Documents implements Serializable {
 
     public static String[] columns = new String[5];
 
+    public final static String PRICE = "price";
+    public final static String DATE = "creationDate";
+    public final static String REGION = "region";
+
     static {
         columns[0] = "content";
-        columns[1] = "price";
-        columns[2] = "creationDate";
-        columns[3] = "region";
+        columns[1] = PRICE;
+        columns[2] = DATE;
+        columns[3] = REGION;
         columns[4] = "url";
     }
 

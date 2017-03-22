@@ -1,14 +1,22 @@
 package com.khudim.dao.docs;
 
+import com.khudim.dao.notifications.Notification;
 import com.khudim.document.IParsedDocument;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.khudim.dao.docs.Documents.DATE;
+import static com.khudim.dao.docs.Documents.PRICE;
+import static com.khudim.dao.docs.Documents.REGION;
 import static com.khudim.helpers.ParseHelper.parseDocumentsDate;
 
 /**
@@ -65,5 +73,20 @@ public class DocumentsService {
 
     public List<String> getAllRegions() {
         return repository.getAllRegions();
+    }
+
+    public List<Documents> getSearchedDocuments(Notification notification) {
+        List<SimpleExpression> restrictions = new ArrayList<>();
+        Double minPrice = notification.getMinPrice();
+        if(minPrice != null) {
+            restrictions.add(Restrictions.ge(PRICE, minPrice));
+        }
+        Double maxPrice = notification.getMaxPrice();
+        if(maxPrice != null) {
+            restrictions.add(Restrictions.ge(PRICE, maxPrice));
+        }
+        restrictions.add(Restrictions.ge(DATE, notification.getDate()));
+        restrictions.add(Restrictions.like(REGION, notification.getRegions(), MatchMode.ANYWHERE));
+        return repository.getAllDocuments(restrictions);
     }
 }

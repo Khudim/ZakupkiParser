@@ -25,7 +25,8 @@
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#sectionA">Describe</a></li>
         <li><a data-toggle="tab" href="#sectionB">User info</a></li>
-        <li th:if="${user.getRole()}==ADMIN"><a data-toggle="tab" href="#sectionC">Admin page</a></li>
+        <li><a data-toggle="tab" href="#sectionC">Last notification result</a></li>
+        <li th:if="${user.getRole()}==ADMIN"><a data-toggle="tab" href="#sectionD">Admin page</a></li>
         <li class="action pull-right"><a data-toggle="tav" th:href="@{/logout}">Logout</a></li>
     </ul>
     <div class="tab-content container">
@@ -35,7 +36,10 @@
         <div id="sectionB" class="tab-pane fade">
             <div th:insert="~{user :: user_info}"></div>
         </div>
-        <div id="sectionC" class="tab-pane fade" th:if="${user.getRole()}==ADMIN">
+        <div id="sectionC" class="tab-pane fade">
+            <div th:insert="~{notification :: result}"></div>
+        </div>
+        <div id="sectionD" class="tab-pane fade" th:if="${user.getRole()}==ADMIN">
             <div th:insert="~{admin :: users_table}"></div>
         </div>
     </div>

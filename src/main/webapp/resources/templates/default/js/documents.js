@@ -54,7 +54,40 @@ $(document).ready(function () {
      $("#myModal").modal();
      });
      });*/
+    $('#tableResult').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[2, "desc"]],
+        ajax: {
+            url: "/getAllNotificationDocuments",
+            type: "POST"
+        },
+        columns: [
+            {data: "price", render: $.fn.dataTable.render.number(',', '.', 0, '\u20bd ')},
+            {
+                data: "creationDate", render: function (data) {
+                return new Date(data).toUTCString();
+            }
+            },
+            {data: "region"},
+            {
+                data: "url", render: function (data, type) {
+                if (type === 'display') {
+                    return $('<a>')
+                        .attr('href', data)
+                        .text(data)
+                        .wrap('<div></div>')
+                        .parent()
+                        .html();
 
+                } else {
+                    return data;
+                }
+            }
+            }
+
+        ]
+    });
 
     function filterColumn(i) {
         $('#tableClient').DataTable().column(i).search(
@@ -69,12 +102,12 @@ $(document).ready(function () {
         });
     });
 
-   // $(document).ready(function () {
-  /*      $('#myBtn').click(function () {
-            document.getElementById("tableModal").innerHTML = $(this).attr('data-text');
-            $('.ui.modal').modal('show');
-        });*/
- //   });
+    // $(document).ready(function () {
+    /*      $('#myBtn').click(function () {
+     document.getElementById("tableModal").innerHTML = $(this).attr('data-text');
+     $('.ui.modal').modal('show');
+     });*/
+    //   });
 
     /*
      $(document).ready(function(){

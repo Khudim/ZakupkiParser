@@ -1,5 +1,6 @@
 package com.khudim.dao.notifications;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,7 @@ public class NotificationRepository {
 
     @Autowired
     private SessionFactory sessionFactory;
-
+    @JsonIgnore
     public void updateNotification(Notification notification){
         getSession().saveOrUpdate(notification);
     }

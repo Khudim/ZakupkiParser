@@ -3,6 +3,7 @@ package com.khudim.controller;
 import com.khudim.dao.DataTableObject;
 import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +80,7 @@ public class AdminController {
                 person.setRole(value);
         }
     }
-
+    @JsonIgnore
     @RequestMapping(value = "/admin/getAllUsers", method = RequestMethod.POST)
     @ResponseBody
     public DataTableObject getAllUsers(@RequestParam(value = "draw") int draw) {

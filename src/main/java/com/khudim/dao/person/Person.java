@@ -1,16 +1,18 @@
 package com.khudim.dao.person;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.khudim.dao.notifications.Notification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Serializable{
 
     private String code;
 
@@ -20,7 +22,7 @@ public class Person {
 
     private PersonRole role;
 
-    private List<Notification> notifications = Collections.emptyList();
+    private Set<Notification> notifications = new HashSet<>();
 
     public Person() {
     }
@@ -69,12 +71,13 @@ public class Person {
         this.role = role;
     }
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
-    public List<Notification> getNotifications() {
+    public Set<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(List<Notification> notifications) {
+    public void setNotifications(Set<Notification> notifications) {
         this.notifications = notifications;
     }
 
@@ -83,22 +86,37 @@ public class Person {
     }
 
     @Override
+    public String toString() {
+        return "Person{" +
+                "code='" + code + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", notifications=" + notifications +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Person person = (Person) o;
-        return code != null ? code.equals(person.code) : person.code == null;
+
+        if (code != null ? !code.equals(person.code) : person.code != null) return false;
+        if (password != null ? !password.equals(person.password) : person.password != null) return false;
+        if (email != null ? !email.equals(person.email) : person.email != null) return false;
+        if (role != person.role) return false;
+        return notifications != null ? notifications.equals(person.notifications) : person.notifications == null;
     }
 
     @Override
     public int hashCode() {
-        return code != null ? code.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "code = " + (code != null ? code : "null") +
-                "}";
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (notifications != null ? notifications.hashCode() : 0);
+        return result;
     }
 }

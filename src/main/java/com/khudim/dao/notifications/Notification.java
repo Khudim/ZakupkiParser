@@ -1,39 +1,37 @@
 package com.khudim.dao.notifications;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.khudim.dao.person.Person;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author hudyshkin
  */
 @Entity
 @Table(name = "notification")
-public class Notification {
+public class Notification implements Serializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "code", nullable = false)
+    private Integer rate;
+
     private Person person;
 
-    @Column
     private String regions;
 
-    @Column
     private Long date;
 
-    @Column(name = "min_price")
-    private Integer minPrice;
+    private Double minPrice;
 
-    @Column(name = "max_price")
-    private Integer maxPrice;
+    private Double maxPrice;
 
     public Notification() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -42,6 +40,9 @@ public class Notification {
         this.id = id;
     }
 
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "code", nullable = false)
     public Person getPerson() {
         return person;
     }
@@ -50,6 +51,7 @@ public class Notification {
         this.person = person;
     }
 
+    @Column(name = "regions")
     public String getRegions() {
         return regions;
     }
@@ -58,6 +60,7 @@ public class Notification {
         this.regions = regions;
     }
 
+    @Column(name = "date")
     public Long getDate() {
         return date;
     }
@@ -65,19 +68,31 @@ public class Notification {
     public void setDate(Long date) {
         this.date = date;
     }
-    public Integer getMinPrice() {
+
+    @Column(name = "min_price")
+    public Double getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(Integer minPrice) {
+    public void setMinPrice(Double minPrice) {
         this.minPrice = minPrice;
     }
 
-    public Integer getMaxPrice() {
+    @Column(name = "max_price")
+    public Double getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(Integer maxPrice) {
+    public void setMaxPrice(Double maxPrice) {
         this.maxPrice = maxPrice;
     }
+    @Column(name = "rate")
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
 }

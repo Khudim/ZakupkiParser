@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @Transactional(rollbackFor = Exception.class)
@@ -45,9 +47,24 @@ public class IndexController {
         String userName = getUser();
         Person person = personService.getPerson(userName);
         List<String> regions = documentsService.getAllRegions();
-        model.addAttribute("regions",regions);
+        model.addAttribute("regions", regions);
         model.addAttribute("user", person);
         return "index";
+    }
+
+    @RequestMapping(value = "/getAllNotificationDocuments", method = RequestMethod.POST)
+    @ResponseBody
+    public DataTableObject getResult(@RequestParam(value = "start") int start,
+                                     @RequestParam(value = "draw") int draw,
+                                     @RequestParam(value = "length") int length) {
+        Person person = personService.getPerson(getUser());
+        DataTableObject dataTableObject = new DataTableObject();
+        List<Documents> documents = getNotificationResult(person);
+        dataTableObject.setDraw(draw);
+        dataTableObject.setRecordsTotal(documents.size());
+        dataTableObject.setRecordsFiltered(documents.size());
+        dataTableObject.setData(documents);
+        return dataTableObject;
     }
 
     private String getUser() {
@@ -91,5 +108,12 @@ public class IndexController {
             }
         }
         return searchedColumns;
+    }
+
+    public List<Documents> getNotificationResult(Person person) {
+        return person.getNotifications().stream()
+                .map(notification -> documentsService.getSearchedDocuments(notification))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 }

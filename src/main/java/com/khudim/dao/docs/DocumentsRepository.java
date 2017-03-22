@@ -3,19 +3,16 @@ package com.khudim.dao.docs;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 import java.util.Map;
 
-import static com.khudim.helpers.Tag.PRICE;
+import static com.khudim.dao.docs.Documents.PRICE;
+import static com.khudim.dao.docs.Documents.REGION;
 
 /**
  * Created by Beaver.
@@ -69,7 +66,7 @@ public class DocumentsRepository {
         Criteria criteria = getCriteria();
         restrictions.forEach((column, value) -> {
             String columnName = Documents.getColumnName(column);
-            if ((PRICE.tag()).equals(columnName)) {
+            if ((PRICE).equals(columnName)) {
                 criteria.add(Restrictions.ge(columnName, Double.parseDouble(value)));
             } else {
                 criteria.add(Restrictions.like(columnName, value, MatchMode.ANYWHERE));
@@ -79,6 +76,12 @@ public class DocumentsRepository {
     }
     @SuppressWarnings("unchecked")
     public List<String> getAllRegions() {
-        return getCriteria().setProjection(Projections.distinct(Projections.property("region"))).list();
+        return getCriteria().setProjection(Projections.distinct(Projections.property(REGION))).list();
+    }
+    @SuppressWarnings("unchecked")
+    public List<Documents> getAllDocuments(List<SimpleExpression> restrictions) {
+        Criteria criteria = getCriteria();
+        restrictions.forEach(criteria::add);
+        return criteria.setMaxResults(100).list();
     }
 }
