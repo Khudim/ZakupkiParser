@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.khudim.dao.docs.Documents.DATE;
-import static com.khudim.dao.docs.Documents.PRICE;
-import static com.khudim.dao.docs.Documents.REGION;
+import static com.khudim.dao.docs.Documents.*;
 import static com.khudim.helpers.ParseHelper.parseDocumentsDate;
 
 /**
@@ -50,16 +48,7 @@ public class DocumentsService {
     }
 
     public List<Documents> getPagingDocuments(int start, int length, int columnNumber, String order, Map<Integer, String> restrictions) {
-        Order criteriaOrder;
-        if (StringUtils.isNotBlank(order)) {
-            if (order.equals("asc")) {
-                criteriaOrder = Order.asc(Documents.getColumnName(columnNumber));
-            } else {
-                criteriaOrder = Order.desc(Documents.getColumnName(columnNumber));
-            }
-        } else {
-            criteriaOrder = Order.asc(Documents.getColumnName(0));
-        }
+        Order criteriaOrder = createOrder(columnNumber, order);
         return repository.getAllDocumentsFrom(start, length, criteriaOrder, restrictions);
     }
 
@@ -75,18 +64,43 @@ public class DocumentsService {
         return repository.getAllRegions();
     }
 
-    public List<Documents> getSearchedDocuments(Notification notification) {
+    public List<Documents> getSearchedDocuments(Notification notification, int start, int length, int columnNumber, String order) {
+        List<SimpleExpression> restrictions = getSimpleExpressions(notification);
+        Order criteriaOrder = createOrder(columnNumber, order);
+        return repository.getAllDocuments(restrictions, start, length, criteriaOrder);
+    }
+
+    private List<SimpleExpression> getSimpleExpressions(Notification notification) {
         List<SimpleExpression> restrictions = new ArrayList<>();
         Double minPrice = notification.getMinPrice();
-        if(minPrice != null) {
+        if (minPrice != null) {
             restrictions.add(Restrictions.ge(PRICE, minPrice));
         }
         Double maxPrice = notification.getMaxPrice();
-        if(maxPrice != null) {
+        if (maxPrice != null) {
             restrictions.add(Restrictions.ge(PRICE, maxPrice));
         }
         restrictions.add(Restrictions.ge(DATE, notification.getDate()));
         restrictions.add(Restrictions.like(REGION, notification.getRegions(), MatchMode.ANYWHERE));
-        return repository.getAllDocuments(restrictions);
+        return restrictions;
+    }
+
+    public long getFilterCount(Notification notification) {
+        List<SimpleExpression> restrictions = getSimpleExpressions(notification);
+        return repository.getFilterCount(restrictions);
+    }
+
+    private Order createOrder(int columnNumber, String order) {
+        Order criteriaOrder;
+        if (StringUtils.isNotBlank(order)) {
+            if (order.equals("asc")) {
+                criteriaOrder = Order.asc(Documents.getColumnName(columnNumber));
+            } else {
+                criteriaOrder = Order.desc(Documents.getColumnName(columnNumber));
+            }
+        } else {
+            criteriaOrder = Order.asc(Documents.getColumnName(2));
+        }
+        return criteriaOrder;
     }
 }

@@ -74,14 +74,27 @@ public class DocumentsRepository {
         });
         return criteria;
     }
+
     @SuppressWarnings("unchecked")
     public List<String> getAllRegions() {
         return getCriteria().setProjection(Projections.distinct(Projections.property(REGION))).list();
     }
+
     @SuppressWarnings("unchecked")
-    public List<Documents> getAllDocuments(List<SimpleExpression> restrictions) {
+    public List<Documents> getAllDocuments(List<SimpleExpression> restrictions, int start, int length, Order order) {
+        Criteria criteria = getCriteria();
+        criteria.setFirstResult(start);
+        criteria.addOrder(order);
+        if(length != 0) {
+            criteria.setMaxResults(length);
+        }
+        restrictions.forEach(criteria::add);
+        return criteria.list();
+    }
+
+    public long getFilterCount(List<SimpleExpression> restrictions) {
         Criteria criteria = getCriteria();
         restrictions.forEach(criteria::add);
-        return criteria.setMaxResults(100).list();
+        return (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
 }

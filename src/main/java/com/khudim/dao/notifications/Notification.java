@@ -86,6 +86,7 @@ public class Notification implements Serializable{
     public void setMaxPrice(Double maxPrice) {
         this.maxPrice = maxPrice;
     }
+
     @Column(name = "rate")
     public Integer getRate() {
         return rate;

@@ -7,6 +7,7 @@ package com.khudim.controller;
 import com.khudim.dao.DataTableObject;
 import com.khudim.dao.docs.Documents;
 import com.khudim.dao.docs.DocumentsService;
+import com.khudim.dao.notifications.Notification;
 import com.khudim.dao.notifications.NotificationService;
 import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
@@ -52,17 +53,54 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping(value = "/updateNotification", method = RequestMethod.POST)
+    @ResponseBody
+    public Notification updateNotification(@RequestParam(value = "minPrice", required = false) String minPrice,
+                                           @RequestParam(value = "maxPrice", required = false) String maxPrice,
+                                           @RequestParam(value = "city", required = false) String city,
+                                           @RequestParam(value = "date", required = false) String date,
+                                           @RequestParam(value = "rate", required = false) String rate) {
+        Person person = personService.getPerson(getUser());
+        Notification notification = person.getNotifications().stream().findFirst().orElse(null);
+        if (notification == null) {
+            notification = new Notification();
+            person.getNotifications().add(notification);
+        }
+        if (StringUtils.isNotBlank(minPrice)) {
+            notification.setMinPrice(Double.parseDouble(minPrice));
+        }
+        if (StringUtils.isNotBlank(maxPrice)) {
+            notification.setMaxPrice(Double.parseDouble(maxPrice));
+        }
+        if (StringUtils.isNotBlank(city)) {
+            notification.setRegions(city);
+        }
+        if (StringUtils.isNotBlank(rate)) {
+            notification.setRate(Integer.parseInt(rate));
+        }
+        if (StringUtils.isNotBlank(date)) {
+            notification.setDate(Long.parseLong(date));
+        }
+        return notification;
+    }
+
     @RequestMapping(value = "/getAllNotificationDocuments", method = RequestMethod.POST)
     @ResponseBody
     public DataTableObject getResult(@RequestParam(value = "start") int start,
                                      @RequestParam(value = "draw") int draw,
+                                     @RequestParam(value = "order[0][dir]") String order,
+                                     @RequestParam(value = "order[0][column]") int columnOrder,
                                      @RequestParam(value = "length") int length) {
         Person person = personService.getPerson(getUser());
+        List<Documents> documents = getNotificationResult(person, start, order, columnOrder, length);
+        Long count = person.getNotifications()
+                .stream()
+                .map(notification -> documentsService.getFilterCount(notification))
+                .mapToLong(Long::longValue).sum();
         DataTableObject dataTableObject = new DataTableObject();
-        List<Documents> documents = getNotificationResult(person);
         dataTableObject.setDraw(draw);
-        dataTableObject.setRecordsTotal(documents.size());
-        dataTableObject.setRecordsFiltered(documents.size());
+        dataTableObject.setRecordsTotal(count);
+        dataTableObject.setRecordsFiltered(count);
         dataTableObject.setData(documents);
         return dataTableObject;
     }
@@ -110,9 +148,9 @@ public class IndexController {
         return searchedColumns;
     }
 
-    public List<Documents> getNotificationResult(Person person) {
+    private List<Documents> getNotificationResult(Person person, int columnOrder, String order, int start, int length) {
         return person.getNotifications().stream()
-                .map(notification -> documentsService.getSearchedDocuments(notification))
+                .map(notification -> documentsService.getSearchedDocuments(notification, start, length, columnOrder, order))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

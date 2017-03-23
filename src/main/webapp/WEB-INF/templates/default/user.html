@@ -1,153 +1,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
 <body>
 
 <div th:fragment="user_info">
-    <form class="ui form" style="margin-top: 50px">
-        <h4 class="ui dividing header">Shipping Information</h4>
+    <form id="noticeForm" class="ui form" style="margin-top: 50px">
+        <h4 class="ui dividing header">Notification Information</h4>
+        <label>Min/Max Prices</label>
         <div class="field">
-            <label>Name</label>
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="shipping[first-name]" placeholder="First Name">
+                    <!--/*@thymesVar id="user" type="com.khudim.dao.person.Person"*/-->
+                    <input type="text" name="minPrice"
+                           th:placeholder="${#numbers.formatDecimal(user.getNotifications().get(0).getMinPrice(), 0, 'DEFAULT', 2, 'DEFAULT')}">
                 </div>
                 <div class="field">
-                    <input type="text" name="shipping[last-name]" placeholder="Last Name">
+                    <input type="text" name="maxPrice"
+                           th:placeholder="${#numbers.formatDecimal(user.getNotifications().get(0).getMaxPrice(), 0, 'DEFAULT', 2, 'DEFAULT')}">
                 </div>
             </div>
         </div>
+
+
+        <h4 class="ui dividing header">Search Region</h4>
+
         <div class="field">
-            <label>Billing Address</label>
-            <div class="fields">
-                <div class="twelve wide field">
-                    <input type="text" name="shipping[address]" placeholder="Street Address">
+            <label>City</label>
+                <div class="field">
+                    <input type="text" name="city" th:placeholder="${user.getNotifications().get(0).getRegions()}">
                 </div>
-                <div class="four wide field">
-                    <input type="text" name="shipping[address-2]" placeholder="Apt #">
-                </div>
-            </div>
         </div>
-        <div class="two fields">
-            <div class="field">
-                <label>State</label>
-                <select class="ui fluid dropdown">
-                    <!--/*@thymesVar id="user" type="com.khudim.dao.person.Person"*/-->
-                        <option th:each="notification : ${user.getNotifications()}"
-                                th:value="${notification}" th:text="${notification.getId()}">Credit card</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Country</label>
-                    <select class="ui fluid dropdown">
-                        <!--/*@thymesVar id="region" type="java.lang.String"*/-->
-                        <!--/*@thymesVar id="regions" type="java.util.ArrayList<String>"*/-->
-                        <option th:each="region : ${regions}"
-                             th:value="${region}" th:text="${region}"></option>
-                    </select>
-                </div>
-            </div>
-        <h4 class="ui dividing header">Billing Information</h4>
+
+        <h4 class="ui dividing header">Notification</h4>
+
         <div class="field">
-            <label>Card Type</label>
-            <div class="ui selection dropdown">
-                <input type="hidden" name="card[type]">
-                <div class="default text">Type</div>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <div class="item" data-value="visa">
-                        <i class="visa icon"></i>
-                        Visa
-                    </div>
-                    <div class="item" data-value="amex">
-                        <i class="amex icon"></i>
-                        American Express
-                    </div>
-                    <div class="item" data-value="discover">
-                        <i class="discover icon"></i>
-                        Discover
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fields">
-            <div class="seven wide field">
-                <label>Card Number</label>
-                <input type="text" name="card[number]" maxlength="16" placeholder="Card #">
-            </div>
-            <div class="three wide field">
-                <label>CVC</label>
-                <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
-            </div>
-            <div class="six wide field">
-                <label>Expiration</label>
-                <div class="two fields">
-                    <div class="field">
-                        <select class="ui fluid search dropdown" name="card[expire-month]">
-                            <option value="">Month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <input type="text" name="card[expire-year]" maxlength="4" placeholder="Year">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h4 class="ui dividing header">Receipt</h4>
-        <div class="field">
-            <label>Send Receipt To:</label>
-            <div class="ui fluid multiple search selection dropdown">
-                <input type="hidden" name="receipt">
-                <i class="dropdown icon"></i>
-                <div class="default text">Saved Contacts</div>
-                <div class="menu">
-                    <div class="item" data-value="jenny" data-text="Jenny">
-                        <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
-                        Jenny Hess
-                    </div>
-                    <div class="item" data-value="elliot" data-text="Elliot">
-                        <img class="ui mini avatar image" src="/images/avatar/small/elliot.jpg">
-                        Elliot Fu
-                    </div>
-                    <div class="item" data-value="stevie" data-text="Stevie">
-                        <img class="ui mini avatar image" src="/images/avatar/small/stevie.jpg">
-                        Stevie Feliciano
-                    </div>
-                    <div class="item" data-value="christian" data-text="Christian">
-                        <img class="ui mini avatar image" src="/images/avatar/small/christian.jpg">
-                        Christian
-                    </div>
-                    <div class="item" data-value="matt" data-text="Matt">
-                        <img class="ui mini avatar image" src="/images/avatar/small/matt.jpg">
-                        Matt
-                    </div>
-                    <div class="item" data-value="justen" data-text="Justen">
-                        <img class="ui mini avatar image" src="/images/avatar/small/justen.jpg">
-                        Justen Kitsune
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui segment">
+            <label>Get documents for last days number : </label>
             <div class="field">
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" name="gift" tabindex="0" class="hidden">
-                    <label>Do not include a receipt in the package</label>
-                </div>
+                <input type="text" name="date" th:placeholder="${user.getNotifications().get(0).getDate()}">
             </div>
         </div>
-        <div class="ui button" tabindex="0">Submit Order</div>
+
+        <div class="field">
+            <label>Notice me every target hour :</label>
+            <div class="field">
+                <input type="text" name="rate" th:placeholder="${user.getNotifications().get(0).getRate()}">
+            </div>
+        </div>
+
+        <div id="submitNotice" class="ui button" tabindex="0" >Update Notification</div>
     </form>
 </div>
 </body>

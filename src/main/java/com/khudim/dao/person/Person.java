@@ -6,8 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -22,7 +22,7 @@ public class Person implements Serializable{
 
     private PersonRole role;
 
-    private Set<Notification> notifications = new HashSet<>();
+    private List<Notification> notifications = new ArrayList<>();
 
     public Person() {
     }
@@ -73,11 +73,11 @@ public class Person implements Serializable{
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
-    public Set<Notification> getNotifications() {
+    public List<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Set<Notification> notifications) {
+    public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
 

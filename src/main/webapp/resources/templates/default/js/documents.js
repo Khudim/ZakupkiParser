@@ -13,7 +13,7 @@ $(document).ready(function () {
             {
                 data: "content", render: function (data, type) {
                 if (type === "display") {
-                    return $('<div class="ui button myBtn" data-text="32">Show modal</div>')
+                    return $('<div class="ui button myBtn" data-text="32">-</div>')
                         .wrap("<div></div>")
                         .parent()
                         .html()
@@ -57,12 +57,24 @@ $(document).ready(function () {
     $('#tableResult').DataTable({
         processing: true,
         serverSide: true,
-        order: [[2, "desc"]],
+        order: [[1, "desc"]],
         ajax: {
             url: "/getAllNotificationDocuments",
             type: "POST"
         },
         columns: [
+            {
+                data: "content", render: function (data, type) {
+                if (type === "display") {
+                    return $('<div class="ui button myBtn" data-text="32">-</div>')
+                        .wrap("<div></div>")
+                        .parent()
+                        .html()
+                } else {
+                    return data;
+                }
+            }
+            },
             {data: "price", render: $.fn.dataTable.render.number(',', '.', 0, '\u20bd ')},
             {
                 data: "creationDate", render: function (data) {
@@ -87,6 +99,18 @@ $(document).ready(function () {
             }
 
         ]
+    });
+
+    $("#submitNotice").click(function() {
+
+
+        $.ajax({
+            type: "POST",
+            url: "/updateNotification",
+            data: $("#noticeForm").serialize() // serializes the form's elements.
+        });
+
+        return false; // avoid to execute the actual submit of the form.
     });
 
     function filterColumn(i) {
