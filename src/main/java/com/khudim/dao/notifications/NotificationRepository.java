@@ -1,10 +1,6 @@
 package com.khudim.dao.notifications;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.khudim.dao.AbstractDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,21 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
-public class NotificationRepository {
+public class NotificationRepository extends AbstractDao<Long, Notification> {
 
-    @Autowired
-    private SessionFactory sessionFactory;
-    @JsonIgnore
     public void updateNotification(Notification notification){
         getSession().saveOrUpdate(notification);
-    }
-
-    protected Session getSession(){
-        return sessionFactory.getCurrentSession();
-    }
-
-    protected Criteria createEntityCriteria(){
-        return getSession().createCriteria(Notification.class);
     }
 
 }

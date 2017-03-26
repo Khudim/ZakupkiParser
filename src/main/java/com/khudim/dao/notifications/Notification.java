@@ -95,5 +95,4 @@ public class Notification implements Serializable{
     public void setRate(Integer rate) {
         this.rate = rate;
     }
-
 }

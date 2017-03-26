@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class PersonService implements UserDetailsService {
@@ -22,22 +21,6 @@ public class PersonService implements UserDetailsService {
     @Autowired
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
-    }
-
-    public Person getRandomPerson(List<Person> personsToExclude) {
-        if (personsToExclude == null) {
-            throw new IllegalArgumentException("Argument 'personsToExclude' must be not NULL.");
-        }
-        List<Person> possiblePersons = new ArrayList<>(getPersons());
-        possiblePersons.removeAll(personsToExclude);
-        Person person = null;
-
-        if (possiblePersons.size() > 0) {
-            int reviewerIndex = ThreadLocalRandom.current().nextInt(0, possiblePersons.size());
-            person = possiblePersons.get(reviewerIndex);
-        }
-
-        return person;
     }
 
     public Person getPerson(String code) {
@@ -56,13 +39,6 @@ public class PersonService implements UserDetailsService {
         personRepository.deletePerson(person);
     }
 
-    public void createPerson(Person person) {
-        if (personRepository.getPerson(person.getCode()) != null) {
-            throw new IllegalArgumentException("Person with code " + person.getCode() + " already exist");
-        }
-        personRepository.createPerson(person);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) {
         Person person = getPerson(username);
@@ -72,17 +48,6 @@ public class PersonService implements UserDetailsService {
             return new User(person.getCode(), person.getPassword(),true,true,true,true, authorities);
         }
         throw new UsernameNotFoundException("User " + username + " not found.");
-    }
-
-    public void editPerson(String oldPersonCode, Person editedPerson) {
-        if (oldPersonCode.equals(editedPerson.getCode())) {
-            personRepository.edit(editedPerson);
-        } else if (personRepository.getPerson(editedPerson.getCode()) != null) {
-            throw new IllegalArgumentException("Person with code " + editedPerson.getCode() + " already exist");
-        } else {
-            /*personRepository.deletePerson(oldPersonCode);*/
-            personRepository.createPerson(editedPerson);
-        }
     }
 
     public void updatePerson(Person person) {

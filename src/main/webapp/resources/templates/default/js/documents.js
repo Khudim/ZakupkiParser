@@ -57,7 +57,7 @@ $(document).ready(function () {
     $('#tableResult').DataTable({
         processing: true,
         serverSide: true,
-        order: [[1, "desc"]],
+        order: [[2, "desc"]],
         ajax: {
             url: "/getAllNotificationDocuments",
             type: "POST"

@@ -43,7 +43,10 @@ public class AdminController {
 
     private List<Person> parsePersons(Map<String, String> params) {
         Map<String, Person> persons = new HashMap<>();
-        return params.entrySet().stream().filter(k -> !"action".equals(k.getKey())).map(k -> {
+        return params.entrySet()
+                .stream()
+                .filter(k -> !"action".equals(k.getKey()))
+                .map(k -> {
             String personId = k.getKey().replaceAll("[^0-9]", "");
             Person person = new Person();
             if (persons.containsKey(personId)) {

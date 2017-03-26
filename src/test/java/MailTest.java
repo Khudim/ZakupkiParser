@@ -20,7 +20,7 @@ public class MailTest {
     public void main() {
         MailTest.sendEmail("hudim@mail.ru", "Email test",
                 "send from Java App", "dmitriykhud@gmail.com",
-                "dmitriykhud", "smeni321");
+                "", "");
     }
 
     public static void sendEmail(String to, String subject, String msg,
@@ -39,8 +39,7 @@ public class MailTest {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
             message.setText(msg);
             Transport.send(message);

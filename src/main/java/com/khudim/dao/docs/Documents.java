@@ -1,6 +1,9 @@
 package com.khudim.dao.docs;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -11,20 +14,6 @@ import java.io.Serializable;
 public class Documents implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    public static String[] columns = new String[5];
-
-    public final static String PRICE = "price";
-    public final static String DATE = "creationDate";
-    public final static String REGION = "region";
-
-    static {
-        columns[0] = "content";
-        columns[1] = PRICE;
-        columns[2] = DATE;
-        columns[3] = REGION;
-        columns[4] = "url";
-    }
 
     @Id
     @Column(name = "guid")
@@ -89,13 +78,6 @@ public class Documents implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public static String getColumnName(int columnNumber) {
-        if (columnNumber >= 0 && columnNumber < columns.length) {
-            return columns[columnNumber];
-        }
-        return "";
     }
 
     @Override
