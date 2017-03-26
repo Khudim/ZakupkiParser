@@ -67,7 +67,8 @@ public class DocumentsService {
         if (maxPrice != null) {
             restrictions.add(Restrictions.ge(PRICE, maxPrice));
         }
-        restrictions.add(Restrictions.ge(DATE, notification.getDate()));
+        long date = System.currentTimeMillis() - notification.getDate() * 86400000;
+        restrictions.add(Restrictions.ge(DATE, date));
         restrictions.add(Restrictions.like(REGION, notification.getRegions(), MatchMode.ANYWHERE));
         return restrictions;
     }
@@ -77,7 +78,9 @@ public class DocumentsService {
         restrictions.forEach((column, value) -> {
             String columnName = getColumnName(column);
             if ((PRICE).equals(columnName)) {
-                expressions.add(Restrictions.ge(columnName, Double.parseDouble(value)));
+                if (StringUtils.isNumeric(value)) {
+                    expressions.add(Restrictions.ge(columnName, Double.parseDouble(value)));
+                }
             } else {
                 expressions.add(Restrictions.like(columnName, value, MatchMode.ANYWHERE));
             }

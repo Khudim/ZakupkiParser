@@ -20,7 +20,7 @@ import static com.khudim.dao.docs.DocumentsFields.REGION;
 public class DocumentsRepository extends AbstractDao<String, Documents> {
 
     void updateDocument(Documents documents) {
-        getSession().saveOrUpdate(documents);
+        getSession().merge(documents);
     }
 
     long getAllDocumentsCount() {

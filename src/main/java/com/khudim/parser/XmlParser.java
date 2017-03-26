@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -38,7 +39,7 @@ public class XmlParser {
     private DocumentsService service;
 
     private String tempDir;
-
+    @Transactional
     @Async
     @Scheduled(cron = "${scheduler.xmlParser.cron}")
     public void findDocuments() {

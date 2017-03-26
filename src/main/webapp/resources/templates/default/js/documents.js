@@ -11,6 +11,8 @@ $(document).ready(function () {
         },
         columns: [
             {
+                "visible": false,
+                "searchable": false,
                 data: "content", render: function (data, type) {
                 if (type === "display") {
                     return $('<div class="ui button myBtn" data-text="32">-</div>')
@@ -20,6 +22,7 @@ $(document).ready(function () {
                 } else {
                     return data;
                 }
+
             }
             },
             {data: "price", render: $.fn.dataTable.render.number(',', '.', 0, '\u20bd ')},
@@ -64,6 +67,8 @@ $(document).ready(function () {
         },
         columns: [
             {
+                "visible": false,
+                "searchable": false,
                 data: "content", render: function (data, type) {
                 if (type === "display") {
                     return $('<div class="ui button myBtn" data-text="32">-</div>')
@@ -102,8 +107,6 @@ $(document).ready(function () {
     });
 
     $("#submitNotice").click(function() {
-
-
         $.ajax({
             type: "POST",
             url: "/updateNotification",
@@ -113,6 +116,13 @@ $(document).ready(function () {
         return false; // avoid to execute the actual submit of the form.
     });
 
+    $("#sendMail").click(function() {
+        $.ajax({
+            type: "GET",
+            url: "/sendMail"// serializes the form's elements.
+        });
+        return false; // avoid to execute the actual submit of the form.
+    });
     function filterColumn(i) {
         $('#tableClient').DataTable().column(i).search(
             $('#col' + i + '_filter').val()

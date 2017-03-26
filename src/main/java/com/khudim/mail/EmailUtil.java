@@ -1,44 +1,45 @@
 package com.khudim.mail;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
+import org.springframework.stereotype.Component;
+
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
+import java.util.Properties;
 
 /**
  * Created by Beaver.
  */
+@Component
 public class EmailUtil {
 
-    public static void sendEmail(Session session, String toEmail, String subject, String body){
-        try
-        {
-            MimeMessage msg = new MimeMessage(session);
-            //set message headers
-            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-            msg.addHeader("format", "flowed");
-            msg.addHeader("Content-Transfer-Encoding", "8bit");
+    public EmailUtil() {
+    }
 
-            msg.setFrom(new InternetAddress("dmitriyKhud@gmail.com", "NoReply-JD"));
-
-            msg.setReplyTo(InternetAddress.parse("no_reply@journaldev.com", false));
-
-            msg.setSubject(subject, "UTF-8");
-
-            msg.setText(body, "UTF-8");
-
-            msg.setSentDate(new Date());
-
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            System.out.println("Message is ready");
-            Transport.send(msg);
-
-            System.out.println("EMail Sent Successfully!!");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+    public void sendEmail(String to, String subject, String msg,
+                          String from, String userName, String password) {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(userName, password);
+            }
+        });
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(msg);
+            Transport.send(message);
+            System.out.println("Message send successfully....");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
+
+
 }

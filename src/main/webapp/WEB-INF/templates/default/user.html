@@ -24,9 +24,9 @@
 
         <div class="field">
             <label>City</label>
-                <div class="field">
-                    <input type="text" name="city" th:placeholder="${user.getNotifications().get(0).getRegions()}">
-                </div>
+            <div class="field">
+                <input type="text" name="city" th:placeholder="${user.getNotifications().get(0).getRegions()}">
+            </div>
         </div>
 
         <h4 class="ui dividing header">Notification</h4>
@@ -44,8 +44,9 @@
                 <input type="text" name="rate" th:placeholder="${user.getNotifications().get(0).getRate()}">
             </div>
         </div>
+        <div id="submitNotice" class="ui button" tabindex="0">Update Notification</div>
+        <div id="sendMail" class="ui button">Send mail</div>
 
-        <div id="submitNotice" class="ui button" tabindex="0" >Update Notification</div>
     </form>
 </div>
 </body>

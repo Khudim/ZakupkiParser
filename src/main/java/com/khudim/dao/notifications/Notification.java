@@ -1,10 +1,13 @@
 package com.khudim.dao.notifications;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.khudim.dao.docs.Documents;
 import com.khudim.dao.person.Person;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hudyshkin
@@ -26,6 +29,8 @@ public class Notification implements Serializable{
     private Double minPrice;
 
     private Double maxPrice;
+
+    private List<Documents> documents = new ArrayList<>();
 
     public Notification() {
     }

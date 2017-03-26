@@ -23,8 +23,8 @@
 <body>
 <div class="bs-bar">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#sectionA">Describe</a></li>
-        <li><a data-toggle="tab" href="#sectionB">User info</a></li>
+        <li class="active"><a data-toggle="tab" href="#sectionA">All documents</a></li>
+        <li><a data-toggle="tab" href="#sectionB">Notification info</a></li>
         <li><a data-toggle="tab" href="#sectionC">Last notification result</a></li>
         <li th:if="${user.getRole()}==ADMIN"><a data-toggle="tab" href="#sectionD">Admin page</a></li>
         <li class="action pull-right"><a data-toggle="tav" th:href="@{/logout}">Logout</a></li>

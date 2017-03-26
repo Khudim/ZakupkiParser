@@ -10,6 +10,7 @@ import com.khudim.dao.docs.DocumentsService;
 import com.khudim.dao.notifications.Notification;
 import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
+import com.khudim.mail.EmailUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +41,9 @@ public class IndexController {
     private final PersonService personService;
 
     @Autowired
+    private EmailUtil emailUtil;
+
+    @Autowired
     public IndexController(DocumentsService documentsService, PersonService personService) {
         this.documentsService = documentsService;
         this.personService = personService;
@@ -53,6 +57,19 @@ public class IndexController {
         model.addAttribute("regions", regions);
         model.addAttribute("user", person);
         return "index";
+    }
+
+    @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
+    public void sendMail() {
+        Person person = personService.getPerson(getUser());
+        Long count = person.getNotifications()
+                .stream()
+                .map(documentsService::getFilterCount)
+                .mapToLong(Long::longValue)
+                .sum();
+        String message = "Нашлось " + count + " документов по вашим параметрам поиска. \n" +
+                "Результаты поиска можно посмотреть на сайте в разделе с результатами последнего поиска.";
+        emailUtil.sendEmail(person.getEmail(), "Результаты поиска", message, "NotificationZakupkiResult@gmail.com", "NotificationZakupkiResult", "smeni321");
     }
 
     @RequestMapping(value = "/getAllDocuments", method = RequestMethod.POST)
@@ -89,9 +106,6 @@ public class IndexController {
                 .map(documentsService::getFilterCount)
                 .mapToLong(Long::longValue)
                 .sum();
-/*        List<String> docs = documents.stream()
-                .map(Documents::getGuid)
-                .collect(Collectors.toList());*/
         DataTableObject dataTableObject = new DataTableObject();
         dataTableObject.setDraw(draw);
         dataTableObject.setRecordsTotal(count);
@@ -117,19 +131,19 @@ public class IndexController {
             notification = new Notification();
             person.getNotifications().add(notification);
         }
-        if (StringUtils.isNotBlank(minPrice)) {
+        if (StringUtils.isNotBlank(minPrice) && StringUtils.isNumeric(maxPrice)) {
             notification.setMinPrice(Double.parseDouble(minPrice));
         }
-        if (StringUtils.isNotBlank(maxPrice)) {
+        if (StringUtils.isNotBlank(maxPrice) && StringUtils.isNumeric(maxPrice)) {
             notification.setMaxPrice(Double.parseDouble(maxPrice));
         }
         if (StringUtils.isNotBlank(city)) {
             notification.setRegions(city);
         }
-        if (StringUtils.isNotBlank(rate)) {
+        if (StringUtils.isNotBlank(rate) && StringUtils.isNumeric(rate)) {
             notification.setRate(Integer.parseInt(rate));
         }
-        if (StringUtils.isNotBlank(date)) {
+        if (StringUtils.isNotBlank(date) && StringUtils.isNumeric(date)) {
             notification.setDate(Long.parseLong(date));
         }
         return notification;

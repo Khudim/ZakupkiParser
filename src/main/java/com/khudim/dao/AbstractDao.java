@@ -4,23 +4,27 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-
+@Transactional
 public abstract class AbstractDao<PK extends Serializable, T> {
 
     private final Class<T> persistentClass;
 
+    private static int count = 0;
+
     @SuppressWarnings("unchecked")
-    public AbstractDao(){
-        this.persistentClass =(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    public AbstractDao() {
+        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    protected Session getSession(){
+    protected Session getSession() {
+        System.out.print(count++);
         return sessionFactory.getCurrentSession();
     }
 
@@ -41,7 +45,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
         getSession().delete(entity);
     }
 
-    protected Criteria createEntityCriteria(){
+    protected Criteria createEntityCriteria() {
         return getSession().createCriteria(persistentClass);
     }
 }
