@@ -65,7 +65,7 @@ public class DocumentsService {
         }
         Double maxPrice = notification.getMaxPrice();
         if (maxPrice != null) {
-            restrictions.add(Restrictions.ge(PRICE, maxPrice));
+            restrictions.add(Restrictions.le(PRICE, maxPrice));
         }
         long date = System.currentTimeMillis() - notification.getDate() * 86400000;
         restrictions.add(Restrictions.ge(DATE, date));

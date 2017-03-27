@@ -58,9 +58,9 @@ public class IndexController {
         model.addAttribute("user", person);
         return "index";
     }
-
+    @ResponseBody
     @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-    public void sendMail() {
+    public String sendMail() {
         Person person = personService.getPerson(getUser());
         Long count = person.getNotifications()
                 .stream()
@@ -70,6 +70,7 @@ public class IndexController {
         String message = "Нашлось " + count + " документов по вашим параметрам поиска. \n" +
                 "Результаты поиска можно посмотреть на сайте в разделе с результатами последнего поиска.";
         emailUtil.sendEmail(person.getEmail(), "Результаты поиска", message, "NotificationZakupkiResult@gmail.com", "NotificationZakupkiResult", "smeni321");
+        return "Ok!";
     }
 
     @RequestMapping(value = "/getAllDocuments", method = RequestMethod.POST)

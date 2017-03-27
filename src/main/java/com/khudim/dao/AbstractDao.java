@@ -13,8 +13,6 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 
     private final Class<T> persistentClass;
 
-    private static int count = 0;
-
     @SuppressWarnings("unchecked")
     public AbstractDao() {
         this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
@@ -24,7 +22,6 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     private SessionFactory sessionFactory;
 
     protected Session getSession() {
-        System.out.print(count++);
         return sessionFactory.getCurrentSession();
     }
 
