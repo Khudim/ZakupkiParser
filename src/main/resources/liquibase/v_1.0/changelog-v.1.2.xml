@@ -4,16 +4,23 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <property name="notify.id" value="INTEGER" dbms="h2"/>
+    <property name="notify.id" value="BIGINT" dbms="mysql"/>
+    <property name="max.price" value="BIGINT" dbms="mysql"/>
+    <property name="max.price" value="DOUBLE" dbms="h2"/>
+    <property name="min.price" value="BIGINT" dbms="mysql"/>
+    <property name="min.price" value="DOUBLE" dbms="h2"/>
+
     <changeSet id="createNotificationTable" author="system">
         <createTable tableName="notification">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="id" type="${notify.id}" autoIncrement="true">
                 <constraints primaryKey="true" />
             </column>
             <column name="regions" type="VARCHAR(255)"/>
             <column name="date" type="BIGINT"/>
             <column name="url" type="VARCHAR(255)"/>
-            <column name="min_price" type="BIGINT"/>
-            <column name="max_price" type="BIGINT"/>
+            <column name="min_price" type="${max.price}"/>
+            <column name="max_price" type="${min.price}"/>
             <column name="code" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
