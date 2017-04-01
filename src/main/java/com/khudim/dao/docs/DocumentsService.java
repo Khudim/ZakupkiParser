@@ -76,7 +76,7 @@ public class DocumentsService {
     private List<SimpleExpression> createExpressionsFromString(Map<Integer, String> restrictions) {
         List<SimpleExpression> expressions = new ArrayList<>();
         restrictions.forEach((column, value) -> {
-            String columnName = getColumnName(column);
+            String columnName = columns.get(column);
             if ((PRICE).equals(columnName)) {
                 if (StringUtils.isNumeric(value)) {
                     expressions.add(Restrictions.ge(columnName, Double.parseDouble(value)));
@@ -104,12 +104,12 @@ public class DocumentsService {
         Order criteriaOrder;
         if (StringUtils.isNotBlank(order)) {
             if (order.equals("asc")) {
-                criteriaOrder = Order.asc(getColumnName(columnNumber));
+                criteriaOrder = Order.asc(columns.get(columnNumber));
             } else {
-                criteriaOrder = Order.desc(getColumnName(columnNumber));
+                criteriaOrder = Order.desc(columns.get(columnNumber));
             }
         } else {
-            criteriaOrder = Order.asc(getColumnName(2));
+            criteriaOrder = Order.asc(columns.get(2));
         }
         return criteriaOrder;
     }

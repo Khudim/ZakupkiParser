@@ -3,7 +3,6 @@ package com.khudim.controller;
 import com.khudim.dao.DataTableObject;
 import com.khudim.dao.person.Person;
 import com.khudim.dao.person.PersonService;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,16 +44,16 @@ public class AdminController {
         Map<String, Person> persons = new HashMap<>();
         return params.entrySet()
                 .stream()
-                .filter(k -> !"action".equals(k.getKey()))
-                .map(k -> {
-            String personId = k.getKey().replaceAll("[^0-9]", "");
+                .filter(map -> !"action".equals(map.getKey()))
+                .map(map -> {
+            String personId = map.getKey().replaceAll("[^0-9]", "");
             Person person = new Person();
             if (persons.containsKey(personId)) {
                 person = persons.get(personId);
             } else {
                 persons.put(personId, person);
             }
-            addValue(k.getKey(), k.getValue(), person);
+            addValue(map.getKey(), map.getValue(), person);
             return person;
         }).collect(Collectors.toList());
     }
@@ -83,7 +82,6 @@ public class AdminController {
                 person.setRole(value);
         }
     }
-    @JsonIgnore
     @RequestMapping(value = "/admin/getAllUsers", method = RequestMethod.POST)
     @ResponseBody
     public DataTableObject getAllUsers(@RequestParam(value = "draw") int draw) {

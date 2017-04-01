@@ -164,7 +164,7 @@ public class IndexController {
 
     private Map<Integer, String> findSearchParam(HttpServletRequest request) {
         Map<Integer, String> searchedColumns = new HashMap<>();
-        for (int i = 0; i < columns.length; i++) {
+        for (int i = 0; i < columns.size(); i++) {
             String param = request.getParameter("columns[" + i + "][search][value]");
             if (StringUtils.isNotBlank(param)) {
                 searchedColumns.put(i, param);
