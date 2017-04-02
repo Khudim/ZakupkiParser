@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class IndexControllerTest {
 
-
     private DocumentsService documentsService = Mockito.mock(DocumentsService.class);
 
     private PersonService personService = Mockito.mock(PersonService.class);
@@ -47,8 +46,7 @@ public class IndexControllerTest {
         Person person = new Person();
         person.setCode("1");
         person.setNotifications(Collections.singletonList(notification));
-        Mockito.when(personService.getCurrentUser()).thenReturn("1");
-        Mockito.when(personService.getPerson("1")).thenReturn(person);
+        Mockito.when(personService.getCurrentUser()).thenReturn(person);
         int start = 0;
         int length = 10;
         int columnNumber = 1;
@@ -57,5 +55,24 @@ public class IndexControllerTest {
                 .thenReturn(documents);
         DataTableObject object = indexController.getAllNotificationDocuments(start, 1, order, columnNumber, length);
         Assert.assertArrayEquals(documents.toArray(), object.getData().toArray());
+    }
+
+    @Test
+    public void shouldUpdateNotification() {
+        Person person = new Person();
+        person.setCode("2");
+        person.setNotifications(Collections.emptyList());
+        Mockito.when(personService.getCurrentUser()).thenReturn(person);
+        String minPrice = "10";
+        String maxPrice = "20";
+        String city = "Spb";
+        String date = "2323";
+        String rate = "1";
+        Notification notification = indexController.updateNotification(minPrice, maxPrice, city, date, rate);
+        Assert.assertEquals(maxPrice, String.valueOf(Math.round(notification.getMaxPrice())));
+        Assert.assertEquals(minPrice, String.valueOf(Math.round(notification.getMinPrice())));
+        Assert.assertEquals(city, notification.getRegions());
+        Assert.assertEquals(date, String.valueOf(notification.getDate()));
+        Assert.assertEquals(rate, String.valueOf(notification.getRate()));
     }
 }

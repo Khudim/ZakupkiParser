@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.khudim.dao.docs.DocumentsFields.columns;
@@ -49,8 +46,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        String userName = personService.getCurrentUser();
-        Person person = personService.getPerson(userName);
+        Person person = personService.getCurrentUser();
         List<String> regions = documentsService.getAllRegions();
         model.addAttribute("regions", regions);
         model.addAttribute("user", person);
@@ -60,7 +56,7 @@ public class IndexController {
     @ResponseBody
     @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
     public String sendMail() {
-        Person person = personService.getPerson(personService.getCurrentUser());
+        Person person = personService.getCurrentUser();
         Long count = person.getNotifications()
                 .stream()
                 .map(documentsService::getFilterCount)
@@ -99,7 +95,7 @@ public class IndexController {
                                                        @RequestParam(value = "order[0][dir]") String order,
                                                        @RequestParam(value = "order[0][column]") int columnNumber,
                                                        @RequestParam(value = "length") int length) {
-        Person person = personService.getPerson(personService.getCurrentUser());
+        Person person = personService.getCurrentUser();
         List<Documents> documents = getNotificationResult(person, columnNumber, order, start, length);
         Long count = person.getNotifications()
                 .stream()
@@ -121,17 +117,15 @@ public class IndexController {
                                            @RequestParam(value = "city", required = false) String city,
                                            @RequestParam(value = "date", required = false) String date,
                                            @RequestParam(value = "rate", required = false) String rate) {
-        Person person = personService.getPerson(personService.getCurrentUser());
+        Person person = personService.getCurrentUser();
         Notification notification = person.getNotifications()
                 .stream()
                 .findFirst()
-                .orElseGet(() -> {
-                            Notification newNotification = new Notification();
-                            person.getNotifications().add(newNotification);
-                            return newNotification;
-                        }
-                );
-
+                .orElse(null);
+        if (notification == null) {
+            notification = new Notification();
+            person.setNotifications(Collections.singletonList(notification));
+        }
         if (isCorrect(minPrice)) {
             notification.setMinPrice(Double.parseDouble(minPrice));
         }

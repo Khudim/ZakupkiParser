@@ -59,7 +59,7 @@ public class PersonService implements UserDetailsService {
         personRepository.updatePerson(person);
     }
 
-    public String getCurrentUser() {
+    public Person getCurrentUser() {
         String userName;
         Object principal = SecurityContextHolder
                 .getContext()
@@ -70,6 +70,6 @@ public class PersonService implements UserDetailsService {
         } else {
             userName = principal.toString();
         }
-        return userName;
+        return getPerson(userName);
     }
 }
