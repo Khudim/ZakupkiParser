@@ -13,8 +13,6 @@ import com.khudim.dao.person.PersonService;
 import com.khudim.mail.EmailUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -51,17 +49,18 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        String userName = getUser();
+        String userName = personService.getCurrentUser();
         Person person = personService.getPerson(userName);
         List<String> regions = documentsService.getAllRegions();
         model.addAttribute("regions", regions);
         model.addAttribute("user", person);
         return "index";
     }
+
     @ResponseBody
     @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
     public String sendMail() {
-        Person person = personService.getPerson(getUser());
+        Person person = personService.getPerson(personService.getCurrentUser());
         Long count = person.getNotifications()
                 .stream()
                 .map(documentsService::getFilterCount)
@@ -95,12 +94,12 @@ public class IndexController {
 
     @RequestMapping(value = "/getAllNotificationDocuments", method = RequestMethod.POST)
     @ResponseBody
-    public DataTableObject getResult(@RequestParam(value = "start") int start,
-                                     @RequestParam(value = "draw") int draw,
-                                     @RequestParam(value = "order[0][dir]") String order,
-                                     @RequestParam(value = "order[0][column]") int columnNumber,
-                                     @RequestParam(value = "length") int length) {
-        Person person = personService.getPerson(getUser());
+    public DataTableObject getAllNotificationDocuments(@RequestParam(value = "start") int start,
+                                                       @RequestParam(value = "draw") int draw,
+                                                       @RequestParam(value = "order[0][dir]") String order,
+                                                       @RequestParam(value = "order[0][column]") int columnNumber,
+                                                       @RequestParam(value = "length") int length) {
+        Person person = personService.getPerson(personService.getCurrentUser());
         List<Documents> documents = getNotificationResult(person, columnNumber, order, start, length);
         Long count = person.getNotifications()
                 .stream()
@@ -122,45 +121,34 @@ public class IndexController {
                                            @RequestParam(value = "city", required = false) String city,
                                            @RequestParam(value = "date", required = false) String date,
                                            @RequestParam(value = "rate", required = false) String rate) {
-        Person person = personService.getPerson(getUser());
+        Person person = personService.getPerson(personService.getCurrentUser());
         Notification notification = person.getNotifications()
                 .stream()
                 .findFirst()
-                .orElse(null);
+                .orElseGet(() -> {
+                            Notification newNotification = new Notification();
+                            person.getNotifications().add(newNotification);
+                            return newNotification;
+                        }
+                );
 
-        if (notification == null) {
-            notification = new Notification();
-            person.getNotifications().add(notification);
-        }
-        if (StringUtils.isNotBlank(minPrice) && StringUtils.isNumeric(maxPrice)) {
+        if (isCorrect(minPrice)) {
             notification.setMinPrice(Double.parseDouble(minPrice));
         }
-        if (StringUtils.isNotBlank(maxPrice) && StringUtils.isNumeric(maxPrice)) {
+        if (isCorrect(maxPrice)) {
             notification.setMaxPrice(Double.parseDouble(maxPrice));
         }
         if (StringUtils.isNotBlank(city)) {
             notification.setRegions(city);
         }
-        if (StringUtils.isNotBlank(rate) && StringUtils.isNumeric(rate)) {
+        if (isCorrect(rate)) {
             notification.setRate(Integer.parseInt(rate));
         }
-        if (StringUtils.isNotBlank(date) && StringUtils.isNumeric(date)) {
+        if (isCorrect(date)) {
             notification.setDate(Long.parseLong(date));
         }
         return notification;
     }
-
-    private String getUser() {
-        String userName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
-    }
-
 
     private Map<Integer, String> findSearchParam(HttpServletRequest request) {
         Map<Integer, String> searchedColumns = new HashMap<>();
@@ -178,5 +166,9 @@ public class IndexController {
                 .map(notification -> documentsService.getSearchedDocuments(notification, start, length, columnNumber, order))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    private boolean isCorrect(String field) {
+        return StringUtils.isNotBlank(field) && StringUtils.isNumeric(field);
     }
 }
